@@ -557,9 +557,9 @@ const Home = () => {
               </span>
             </div>
             <div className="flex justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold text-slate-400 flex-wrap">
-              <FooterLink href="#">特定商取引法に基づく表記</FooterLink>
-              <FooterLink href="#">プライバシーポリシー</FooterLink>
-              <FooterLink href="#">運営者情報</FooterLink>
+              <FooterLink href="/legal/tokusho">特定商取引法に基づく表記</FooterLink>
+              <FooterLink href="/legal/privacy">プライバシーポリシー</FooterLink>
+              <FooterLink href="/membership">メンバーシップページ</FooterLink>
             </div>
             <div className="text-xs text-slate-300 font-bold">
               &copy; 2025 Minecraft Server 🍀 Not affiliated with Mojang or Microsoft.
