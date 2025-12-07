@@ -129,6 +129,14 @@ const App = () => {
     }
   };
 
+  const displayUser = user ?? {
+    id: "guest",
+    name: "Guest",
+    discriminator: "0000",
+    avatar:
+      "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
+  };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -408,7 +416,7 @@ const App = () => {
           </div>
 
           <div className="flex-1 w-full flex justify-center">
-            <DiscordMemberListMock user={user} />
+                <DiscordMemberListMock user={displayUser} />
           </div>
         </section>
 
@@ -662,7 +670,10 @@ const DiscordMemberListMock = ({ user }) => (
       >
         <div className="relative">
           <img
-            src={user.avatar}
+            src={
+              user?.avatar ||
+              "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg"
+            }
             className="w-8 h-8 rounded-full bg-slate-200"
             alt=""
           />
@@ -672,7 +683,7 @@ const DiscordMemberListMock = ({ user }) => (
         </div>
         <div>
           <div className="text-[#5fbb4e] font-medium text-sm group-hover:underline flex items-center gap-1">
-            {user.name}
+            {user?.name ?? "Guest"}
             <Crown
               size={12}
               className="fill-current text-[#ffcc00] stroke-[#ffcc00] stroke-[1px]"
