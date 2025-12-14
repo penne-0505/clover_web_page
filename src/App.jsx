@@ -7,6 +7,7 @@ import Join from "./pages/Join.jsx";
 import Contract from "./pages/Contract.jsx";
 import Help from "./pages/Help.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
+import LegalDoc from "./pages/LegalDoc.jsx";
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
         <Route path="/join" element={<Join />} />
         <Route path="/membership" element={<Home />} />
         <Route path="/legal" element={<Legal />} />
-        <Route path="/legal/:section" element={<Legal />} />
+        <Route path="/legal/:docKey" element={<LegalDoc />} />
         <Route
           path="/contract"
           element={
