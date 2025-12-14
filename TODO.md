@@ -186,19 +186,6 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 
 ## Backlog
 
-- **Title**: [Content] Helpページ文言整備
-  - **ID**: Content-Feat-9
-  - **Priority**: P3
-  - **Size**: S
-  - **Area**: Content
-  - **Dependencies**: []
-  - **Goal**: `/help` ページにFAQリンクや問い合わせ導線など最低限の文言を追加し、プレースホルダ状態を解消する。
-  - **Steps**:
-    1. [ ] 文言ドラフトを作成し、リンク先（FAQ/問い合わせフォーム）が未整備の場合は暫定表記を記載
-    2. [ ] `/help` ページに反映し、/contract からの導線表示を確認
-  - **Description**: 仮ページのままの `/help` を最低限有用なコンテンツにする。
-  - **Plan**: None
-
 - **Title**: [Legal] 利用規約の策定と反映
   - **ID**: Legal-Feat-10
   - **Priority**: P1
@@ -260,15 +247,3 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 ---
 
 ## In Progress
-
-- **Title**: [Feat] Legal pages routing & rendering
-  - **ID**: Legal-Feat-11
-  - **Priority**: P1
-  - **Size**: M
-  - **Area**: Legal
-  - **Dependencies**: []
-  - **Goal**: `/legal/terms|privacy|refund` に直接アクセスして本文が表示され、フッター・Contract導線から3文書へ遷移できる。目次・印刷対応と改定履歴が機能している。
-  - **Steps**:
-    1. [x] Plan `_docs/plan/Legal/legal-pages-static-routes.md` の Tasks 1–8 を実行
-  - **Description**: 法務関連3文書を実務的な固定URLで公開し、Markdownレンダリング・目次・印刷対応を備える。
-  - **Plan**: `_docs/plan/Legal/legal-pages-static-routes.md`
