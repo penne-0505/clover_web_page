@@ -9,6 +9,8 @@ import Help from "./pages/Help.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import LegalDoc from "./pages/LegalDoc.jsx";
 import Tokusho from "./pages/Tokusho.jsx";
+import Thanks from "./pages/Thanks.jsx";
+import Cancellation from "./pages/Cancellation.jsx";
 
 const App = () => {
   return (
