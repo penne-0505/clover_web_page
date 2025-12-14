@@ -85,12 +85,14 @@ const Contract = () => {
 
   const beginDiscordLogin = () => {
     trackEvent("login_start", { provider: "discord", context: "contract" });
+    const returnTo = `${window.location.pathname}${window.location.search}`;
     const params = new URLSearchParams({
       client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
       response_type: "code",
       scope: "identify guilds.join",
       redirect_uri: redirectUriClient,
       prompt: "consent",
+      state: returnTo || "/membership",
     });
     window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
   };
@@ -244,7 +246,7 @@ const Contract = () => {
               onChange={() => setConsentTerms(!consentTerms)}
               required
               linkLabel="利用規約を開く"
-              linkHref="/legal"
+              linkHref="/legal/terms"
             />
             <ToggleRow
               title="支援者として名前を表示する（任意）"
@@ -274,6 +276,17 @@ const Contract = () => {
               <li>Stripe へ遷移して決済情報を入力する</li>
               <li>決済完了後、自動的に Discord ロールが付与されます</li>
             </ol>
+            <div className="text-xs text-slate-500 mt-3 flex flex-wrap gap-3">
+              <a href="/legal/terms" className="font-bold text-[#5865F2] hover:underline">
+                利用規約
+              </a>
+              <a href="/legal/privacy" className="font-bold text-[#5865F2] hover:underline">
+                プライバシーポリシー
+              </a>
+              <a href="/legal/refund" className="font-bold text-[#5865F2] hover:underline">
+                返金ポリシー
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-col md:flex-row gap-3">
