@@ -8,6 +8,11 @@ import {
   HeartHandshake,
   HelpCircle,
   Users,
+  Settings,
+  CreditCard,
+  User,
+  LogOut,
+  Sparkles, // 追加
 } from "lucide-react";
 import { trackEvent, captureError } from "../analytics";
 import CommunityGoalWidget from "../components/ui/CommunityGoalWidget";
@@ -492,45 +497,105 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Improved Membership Portal Section (Refined V1) */}
         <section className="container mx-auto px-4 py-12 max-w-3xl">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 soft-shadow">
-            <div className="flex items-start justify-between gap-4 flex-col md:flex-row md:items-center">
-              <div>
-                <p className="text-xs font-bold text-[#5fbb4e] uppercase tracking-wide mb-2">
-                  Membership Portal (beta)
-                </p>
-                <h3 className="text-2xl font-black text-slate-800 mb-2">
-                  契約の確認・解約はこちら
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-lg relative overflow-hidden"
+          >
+            {/* Background Accent - Soft & Minimal */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-slate-100 to-slate-50 rounded-bl-full -mr-12 -mt-12 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#5fbb4e]/5 rounded-tr-full -ml-10 -mb-10 pointer-events-none" />
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
+                  <div className="p-2 bg-slate-100 rounded-xl text-slate-600 shadow-sm border border-slate-200/50">
+                    <Settings size={20} />
+                  </div>
+                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                    Subscription
+                  </span>
+                </div>
+                <h3 className="text-2xl font-black text-slate-800 mb-3 tracking-tight">
+                  契約内容の確認・変更
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  決済履歴の確認、支払い方法の変更、解約（次回更新日まで利用可）が行えます。
-                  デザインは後日更新予定です。
+                <p className="text-sm font-bold text-slate-500 leading-relaxed max-w-md mx-auto md:mx-0">
+                  お支払い履歴の確認、カード情報の変更、プランの解約はこちらから。<br className="hidden md:inline"/>
+                  Stripeのセキュアなポータルページへ移動します。
                 </p>
               </div>
-              <div className="w-full md:w-auto">
+
+              <div className="w-full md:w-auto flex flex-col gap-4 items-center md:items-end">
                 <button
                   onClick={openPortal}
                   disabled={portalLoading}
-                  className={`w-full md:w-auto px-4 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors duration-200 ${
+                  className={`w-full md:w-64 py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-3 transition-all btn-push shadow-[0_4px_0_#cbd5e1] active:shadow-none active:translate-y-[4px] border border-slate-200 ${
                     portalLoading
-                      ? "bg-slate-200 text-slate-500 cursor-not-allowed"
-                      : "bg-[#5fbb4e] text-white hover:bg-[#4ea540] btn-push"
+                      ? "bg-slate-100 text-slate-400 cursor-not-allowed shadow-none border-transparent"
+                      : "bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
-                  {portalLoading ? "読み込み中..." : "Stripeポータルを開く"}
-                  <ArrowRight size={16} />
+                  {portalLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+                      <span>読み込み中...</span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="bg-slate-100 p-1 rounded text-slate-600">
+                        <CreditCard size={16} />
+                      </div>
+                      <span>Stripeポータルを開く</span>
+                      <ArrowRight size={16} className="text-slate-400" />
+                    </>
+                  )}
                 </button>
-                <p className="text-[11px] text-slate-400 mt-2">
-                  * ログイン済みのDiscordアカウントが必要です。
-                </p>
+                
+                {/* Status & Sub-actions */}
+                <div className="flex flex-col items-center md:items-end gap-1">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                    <div className={`w-2 h-2 rounded-full ${user ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" : "bg-slate-300"}`} />
+                    {user ? (
+                      <span className="flex items-center gap-1">
+                        ログイン中: <span className="text-slate-600 font-mono">#{user.discriminator}</span>
+                      </span>
+                    ) : "ログインが必要です"}
+                  </div>
+                  
+                  {user ? (
+                    <button 
+                      onClick={handleLogout}
+                      className="text-[10px] font-bold text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1 px-1"
+                    >
+                      <LogOut size={10} /> ログアウト
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={beginDiscordLogin}
+                      className="text-[10px] font-bold text-[#5865F2] hover:text-[#4752C4] transition-colors flex items-center gap-1 px-1"
+                    >
+                      <Users size={10} /> ログインする
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
+
             {portalError && (
-              <div className="mt-4 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: "auto", marginTop: 24 }}
+                className="text-sm font-bold text-red-600 bg-red-50 border border-red-100 rounded-xl p-4 flex items-center gap-3"
+              >
+                <div className="bg-white p-1 rounded-full shadow-sm text-red-500 shrink-0">
+                  <ArrowRight size={12} className="rotate-45" />
+                </div>
                 {portalError}
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         </section>
 
         <section className="container mx-auto px-4 py-16 max-w-3xl">

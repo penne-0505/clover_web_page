@@ -17,6 +17,21 @@ const PricingComponent = ({ onStartCheckout }) => {
   const plan = PLANS[planKey];
   const isRecommended = planKey === "sub_yearly";
 
+  // スワイプ操作のハンドリング
+  const handleDragEnd = (event, info) => {
+    const offset = info.offset.x;
+    const threshold = 50; // 切り替え判定の移動距離
+
+    // 現在が「単発」で左にスワイプ → 「継続」へ
+    if (billingType === "one_time" && offset < -threshold) {
+      setBillingType("subscription");
+    } 
+    // 現在が「継続」で右にスワイプ → 「単発」へ
+    else if (billingType === "subscription" && offset > threshold) {
+      setBillingType("one_time");
+    }
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto px-4 flex flex-col items-center">
       
@@ -30,12 +45,12 @@ const PricingComponent = ({ onStartCheckout }) => {
             x: billingType === "one_time" ? 0 : "0.375rem",
             width: "calc(50% - 0.75rem)"
           }}
-          transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
         />
         
         <button
           onClick={() => setBillingType("one_time")}
-          className={`flex-1 relative z-10 py-3 text-sm font-bold transition-colors duration-300 flex items-center justify-center gap-2 ${
+          className={`flex-1 relative z-10 py-3 text-sm font-bold transition-colors duration-200 flex items-center justify-center gap-2 ${
             billingType === "one_time" ? "text-slate-800" : "text-slate-500 hover:text-slate-700"
           }`}
         >
@@ -45,7 +60,7 @@ const PricingComponent = ({ onStartCheckout }) => {
         
         <button
           onClick={() => setBillingType("subscription")}
-          className={`flex-1 relative z-10 py-3 text-sm font-bold transition-colors duration-300 flex items-center justify-center gap-2 ${
+          className={`flex-1 relative z-10 py-3 text-sm font-bold transition-colors duration-200 flex items-center justify-center gap-2 ${
             billingType === "subscription" ? "text-slate-800" : "text-slate-500 hover:text-slate-700"
           }`}
         >
@@ -60,9 +75,10 @@ const PricingComponent = ({ onStartCheckout }) => {
           {billingType === "subscription" ? (
             <motion.div
               key="toggle"
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.15 }}
               className="flex items-center gap-4 bg-white border border-slate-100 rounded-full px-6 py-2 shadow-sm"
             >
               <span 
@@ -74,14 +90,14 @@ const PricingComponent = ({ onStartCheckout }) => {
               
               <button
                 onClick={() => setIsYearly(!isYearly)}
-                className={`relative w-12 h-7 rounded-full transition-colors duration-300 focus:outline-none ${
+                className={`relative w-12 h-7 rounded-full transition-colors duration-200 focus:outline-none ${
                   isYearly ? "bg-teal-500" : "bg-slate-200"
                 }`}
               >
                 <motion.div
                   className="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-md"
                   animate={{ x: isYearly ? 20 : 0 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  transition={{ type: "spring", stiffness: 700, damping: 30 }}
                 />
               </button>
               
@@ -100,9 +116,10 @@ const PricingComponent = ({ onStartCheckout }) => {
           ) : (
             <motion.div
               key="one-time-label"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
+              exit={{ opacity: 0, y: 5 }}
+              transition={{ duration: 0.15 }}
               className="text-sm font-bold text-slate-400 flex items-center gap-2"
             >
               <Calendar size={16} />
@@ -117,13 +134,20 @@ const PricingComponent = ({ onStartCheckout }) => {
         <AnimatePresence mode="wait">
           <motion.div
             key={planKey}
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
-            className="w-full"
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            
+            // Drag Properties for Swipe
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            style={{ touchAction: "pan-y" }} // Allow vertical scrolling
+            className="w-full cursor-grab active:cursor-grabbing"
           >
-             <div className={`relative flex flex-col p-8 md:p-10 rounded-[2.5rem] bg-white border-4 transition-all duration-300 ${
+             <div className={`relative flex flex-col p-8 md:p-10 rounded-[2.5rem] bg-white border-4 transition-all duration-200 ${
                isRecommended 
                  ? "border-teal-100 shadow-[0_20px_50px_-12px_rgba(20,184,166,0.25)]" 
                  : plan.borderColor + " shadow-xl"
@@ -165,9 +189,9 @@ const PricingComponent = ({ onStartCheckout }) => {
                   ].filter(Boolean).map((feature, i) => (
                     <motion.div 
                       key={i} 
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, x: -5 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
+                      transition={{ delay: i * 0.05, duration: 0.2 }}
                       className="flex items-center gap-4 text-slate-700 font-bold"
                     >
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-white shadow-sm ${plan.iconBg} bg-gradient-to-br from-white/20 to-transparent`}>
@@ -186,7 +210,7 @@ const PricingComponent = ({ onStartCheckout }) => {
                   }}
                   className={`w-full py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all btn-push text-white shadow-lg active:shadow-none active:translate-y-[4px] relative overflow-hidden group ${plan.bgColor} ${plan.hoverBgColor}`}
                 >
-                  <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-2xl pointer-events-none"></span>
+                  <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-200 rounded-2xl pointer-events-none"></span>
                   <span className="relative z-10 flex items-center gap-2">
                     このプランで支援する <ArrowRight size={20} strokeWidth={3} />
                   </span>
