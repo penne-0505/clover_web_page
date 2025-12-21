@@ -186,32 +186,6 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 
 ## Backlog
 
-- **Title**: [Enhance] Cancellation ページを実処理と連携
-  - **ID**: Membership-Enhance-17
-  - **Priority**: P2
-  - **Size**: M
-  - **Area**: Membership
-  - **Dependencies**: []
-  - **Goal**: `/cancellation` が実際のサブスク解約状態に基づいて表示され、未解約や未ログイン時は適切に案内されている。
-  - **Steps**:
-    1. [ ] Plan の "Tasks" に従い、Subscription 状態取得 API とフロントの表示切替を実装する
-    2. [ ] Plan の "Test Plan" に従い、解約済み/未解約/未ログインの表示を確認する
-  - **Description**: Stripe Portal での解約結果を反映し、モック表示を実データ連携に切り替える。
-  - **Plan**: `_docs/plan/Membership/cancellation_page_integration.md`
-
-- **Title**: [Enhance] Thanks ページを実処理と連携
-  - **ID**: Membership-Enhance-16
-  - **Priority**: P1
-  - **Size**: M
-  - **Area**: Membership
-  - **Dependencies**: []
-  - **Goal**: `/thanks` が実決済データに基づいて表示され、`session_id` が無い直接アクセスは遮断されている。
-  - **Steps**:
-    1. [ ] Plan の "Tasks" に従い、Checkout Success URL と API/フロント連携を実装する
-    2. [ ] Plan の "Test Plan" に従い、成功/失敗シナリオの表示を確認する
-  - **Description**: Stripe Checkout 完了後のサンクス画面を実データ連携に切り替え、直接アクセスを防止する。
-  - **Plan**: `_docs/plan/Membership/thanks_page_integration.md`
-
 - **Title**: [Chore] GA4/Sentry 本番接続
   - **ID**: Membership-Chore-5
   - **Priority**: P3
