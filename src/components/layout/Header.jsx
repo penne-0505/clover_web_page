@@ -143,12 +143,9 @@ const Header = ({
                 alt="User"
                 className="w-8 h-8 rounded-full bg-white shadow-sm"
               />
-              <div className="flex flex-col leading-none">
+              <div className="flex flex-col items-center text-center leading-none">
                 <span className="text-xs font-bold text-slate-700">
                   {displayUser.name ?? "Unknown"}
-                </span>
-                <span className="text-[10px] text-slate-400">
-                  Login as #{displayUser.discriminator ?? "0000"}
                 </span>
               </div>
               <button
