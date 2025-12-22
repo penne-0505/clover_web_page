@@ -158,19 +158,17 @@ export default function Contract() {
   };
 
   useEffect(() => {
-    // 開発プレビュー向けに直アクセス防止リダイレクトを一時停止
-    // if (!planParam) {
-    //   window.location.replace("/membership");
-    //   return;
-    // }
+    if (!planParam) {
+      window.location.replace("/membership");
+      return;
+    }
     const url = new URL(window.location.href);
     if (url.searchParams.get("code")) return;
 
-    // 開発プレビュー向けに自動Discord認証遷移を一時停止
-    // if (!user) {
-    //   beginDiscordLogin();
-    //   return;
-    // }
+    if (!user) {
+      beginDiscordLogin();
+      return;
+    }
   }, [user, planParam]);
 
   const toggleAgreement = (key) => {
@@ -218,28 +216,27 @@ export default function Contract() {
 
   const isPayable = agreements.terms && agreements.discordRole && !isLoading;
 
-  // プレビューを優先するため、ユーザー未取得でも画面を表示する
-  // if (!user) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center bg-[#f0f9ff]">
-  //       <div className="text-center space-y-3">
-  //         {error ? (
-  //           <>
-  //             <div className="text-red-600 font-black text-lg">{error}</div>
-  //             <div className="text-sm text-slate-500">数秒後に /membership へ戻ります。</div>
-  //           </>
-  //         ) : (
-  //           <>
-  //             <Loader2 className="animate-spin w-12 h-12 text-[#5fbb4e] mx-auto mb-4" />
-  //             <p className="text-slate-600 font-bold">
-  //               {oauthRedirecting ? "Discord認証へ移動しています..." : "ページを準備しています..."}
-  //             </p>
-  //           </>
-  //         )}
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#f0f9ff]">
+        <div className="text-center space-y-3">
+          {error ? (
+            <>
+              <div className="text-red-600 font-black text-lg">{error}</div>
+              <div className="text-sm text-slate-500">数秒後に /membership へ戻ります。</div>
+            </>
+          ) : (
+            <>
+              <Loader2 className="animate-spin w-12 h-12 text-[#5fbb4e] mx-auto mb-4" />
+              <p className="text-slate-600 font-bold">
+                {oauthRedirecting ? "Discord認証へ移動しています..." : "ページを準備しています..."}
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   // --- Render (New UI) ---
   const containerVariants = {
