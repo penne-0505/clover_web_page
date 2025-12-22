@@ -85,7 +85,7 @@ export default function Contract() {
   });
 
   const [agreements, setAgreements] = useState({
-    discordRole: true,
+    discordRole: false,
     publicListing: true,
     terms: false,
   });
