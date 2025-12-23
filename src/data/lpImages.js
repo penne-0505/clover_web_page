@@ -5,12 +5,14 @@ import landingHeroMain640 from "../assets/images/landing/hero/main-640.webp";
 import landingHeroMain1024 from "../assets/images/landing/hero/main-1024.webp";
 import landingHeroMain1600 from "../assets/images/landing/hero/main-1600.webp";
 import landingHeroRight from "../assets/images/landing/hero/sub-right.webp";
+import landingHeroRight240 from "../assets/images/landing/hero/sub-right-240.webp";
 import landingHeroRight320 from "../assets/images/landing/hero/sub-right-320.webp";
 import landingHeroRight480 from "../assets/images/landing/hero/sub-right-480.webp";
 import landingHeroRight640 from "../assets/images/landing/hero/sub-right-640.webp";
 import landingHeroRight1024 from "../assets/images/landing/hero/sub-right-1024.webp";
 import landingHeroRight1600 from "../assets/images/landing/hero/sub-right-1600.webp";
 import landingHeroLeft from "../assets/images/landing/hero/sub-left.webp";
+import landingHeroLeft240 from "../assets/images/landing/hero/sub-left-240.webp";
 import landingHeroLeft320 from "../assets/images/landing/hero/sub-left-320.webp";
 import landingHeroLeft480 from "../assets/images/landing/hero/sub-left-480.webp";
 import landingHeroLeft640 from "../assets/images/landing/hero/sub-left-640.webp";
@@ -149,6 +151,7 @@ export const joinImages = {
 		1920,
 		1080,
 		buildSrcSet([
+			{ src: landingHeroRight240, width: 240 },
 			{ src: landingHeroRight320, width: 320 },
 			{ src: landingHeroRight480, width: 480 },
 			{ src: landingHeroRight640, width: 640 },
@@ -162,6 +165,7 @@ export const joinImages = {
 		2436,
 		1125,
 		buildSrcSet([
+			{ src: landingHeroLeft240, width: 240 },
 			{ src: landingHeroLeft320, width: 320 },
 			{ src: landingHeroLeft480, width: 480 },
 			{ src: landingHeroLeft640, width: 640 },
