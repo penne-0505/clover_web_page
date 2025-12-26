@@ -36,7 +36,7 @@ related_prs: []
 - 環境変数例（Cloudflare Pages Functions）: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_REDIRECT_URI`, `DISCORD_BOT_TOKEN`, `DISCORD_GUILD_ID`, `DISCORD_ROLE_MEMBER_ID`, `STRIPE_PRICE_*`, `AUTH_TOKEN_SECRET`, `AUTH_TOKEN_TTL_SECONDS`.
 - セキュリティ: Webhook 署名検証必須。Bot API は認可トークンを要求し、IP allowlist も検討。
 - UX: モバイル優先（ただし PC 同等品質）。CTA は Discord 参加、補助導線としてメンバーシップページ。
-- 法的文書: `src/legal/content/` を正として管理し、フロントから参照する。開発者向けの参照コピーは `_docs/guide/legal/` に保持する。
+- 案内文書: `src/legal/content/` を正として管理し、フロントから参照する。開発者向けの参照コピーは `_docs/guide/legal/` に保持する。
 
 ## Milestones
 - M1 契約ページ (Stripe Checkout)  

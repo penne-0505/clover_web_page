@@ -21,7 +21,7 @@ TailwindはCDNロードで動作するため、追加のセットアップは不
 
 ## 環境変数（デプロイ/Functions）
 
-Cloudflare Pages + Pages Functions を利用する前提の構成です。決済/認証系の Functions を動かすには以下の環境変数が必要です。
+Cloudflare Pages + Pages Functions を利用する前提の構成です。外部連携系の Functions を動かすには以下の環境変数が必要です。
 
 ### Pages Functions（必須）
 - `STRIPE_SECRET_KEY`

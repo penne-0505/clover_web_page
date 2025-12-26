@@ -444,7 +444,7 @@ const Membership = () => {
               専用のカラーとロールで、コミュニティ内での存在感が変わります。
               <br />
               <br />
-              限定チャンネルでは、アップデート情報をいち早くキャッチしたり、運営に直接フィードバックを送ることができます。
+              限定チャンネルでは、アップデート情報をいち早くキャッチしたり、チームへ直接フィードバックを送ることができます。
             </p>
             <div className="flex gap-2 justify-center md:justify-start">
               <motion.span
@@ -507,9 +507,6 @@ const Membership = () => {
             <div className="text-center mt-12 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
               すべてのプランで同じ特典を提供します。適用期間及び更新方法が異なります。
               <br />
-              <span className="opacity-70">
-                ※ 返金ポリシーについては、規約をご確認ください。
-              </span>
             </div>
           </div>
         </section>
