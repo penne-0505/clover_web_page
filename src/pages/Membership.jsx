@@ -447,33 +447,15 @@ const Membership = () => {
               限定チャンネルでは、アップデート情報をいち早くキャッチしたり、チームへ直接フィードバックを送ることができます。
             </p>
             <div className="flex gap-2 justify-center md:justify-start">
-              <motion.span
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: "rgba(95, 187, 78, 0.2)",
-                }}
-                className="inline-flex items-center px-3 py-1 rounded-full bg-[#5fbb4e]/10 text-[#5fbb4e] text-xs font-bold cursor-default"
-              >
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#5fbb4e]/10 text-[#5fbb4e] text-xs font-bold cursor-default">
                 <Crown size={14} className="mr-1" /> 専用ロール
-              </motion.span>
-              <motion.span
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: "rgba(88, 101, 242, 0.2)",
-                }}
-                className="inline-flex items-center px-3 py-1 rounded-full bg-[#5865F2]/10 text-[#5865F2] text-xs font-bold cursor-default"
-              >
+              </span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#5865F2]/10 text-[#5865F2] text-xs font-bold cursor-default">
                 <Users size={14} className="mr-1" /> 限定チャンネル
-              </motion.span>
-              <motion.span
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: "rgba(255, 193, 7, 0.2)",
-                }}
-                className="inline-flex items-center px-3 py-1 rounded-full bg-[#FFC107]/10 text-[#B28704] text-xs font-bold cursor-default"
-              >
+              </span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#FFC107]/10 text-[#B28704] text-xs font-bold cursor-default">
                 <Sparkles size={14} className="mr-1" /> 優先サポート
-              </motion.span>
+              </span>
             </div>
           </div>
 

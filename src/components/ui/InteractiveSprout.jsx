@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const InteractiveClover = () => (
+const InteractiveSprout = () => (
   <motion.span
     className="text-xl md:text-2xl ml-1 inline-block cursor-pointer select-none"
     whileHover={{
@@ -10,8 +10,8 @@ const InteractiveClover = () => (
     whileTap={{ scale: 0.7 }}
     transition={{ type: "spring", stiffness: 400, damping: 12 }}
   >
-    🍀
+    🌱
   </motion.span>
 );
 
-export default InteractiveClover;
+export default InteractiveSprout;

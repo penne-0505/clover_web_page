@@ -1,5 +1,5 @@
 import React from "react";
-import InteractiveClover from "../ui/InteractiveClover";
+import InteractiveSprout from "../ui/InteractiveSprout";
 import FooterLink from "../ui/FooterLink";
 
 const Footer = ({ onScrollTop }) => {
@@ -11,14 +11,18 @@ const Footer = ({ onScrollTop }) => {
               href="/"
               className="font-bold text-slate-700 brand-font text-lg cursor-pointer select-none"
             >
-              Minecraft Server <InteractiveClover />
+              Minecraft Community <InteractiveSprout />
             </a>
         </div>
       <div className="flex justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold text-slate-400 flex-wrap">
+        <FooterLink href="/help">ヘルプ / FAQ</FooterLink>
+        <FooterLink href="/legal">利用規約</FooterLink>
+        <FooterLink href="/legal">プライバシーポリシー</FooterLink>
+        <FooterLink href="/legal">特定商取引法に基づく表記</FooterLink>
         <FooterLink href="/membership">メンバーシップページ</FooterLink>
       </div>
       <div className="text-xs text-slate-300 font-bold">
-        &copy; 2025 Minecraft Server 🍀 Not affiliated with Mojang or Microsoft.
+        &copy; 2025-2026 Minecraft Community 🌱 Not affiliated with Mojang or Microsoft.
       </div>
       </div>
     </footer>

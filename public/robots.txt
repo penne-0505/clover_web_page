@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://minecraft-clover.pages.dev/sitemap.xml
+Sitemap: https://minecraft-landing-page.pages.dev/sitemap.xml

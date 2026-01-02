@@ -160,12 +160,12 @@ const DiscordMemberListMock = ({ user }) => {
         onHoverEnd={() => setIsUserHover(false)}
         transition={{ delay: 0.3, duration: 0.4 }}
         viewport={{ once: true, margin: "-50px" }}
-        className="flex items-center gap-4 p-2 rounded cursor-pointer group relative overflow-hidden"
+        className="flex items-center gap-4 p-2 rounded cursor-default group relative overflow-hidden"
       >
         <motion.div 
           className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ffcc00]/10 to-[#ffcc00]/20 pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: isUserHover ? 1 : 0 }}
+          animate={{ opacity: isHover ? 1 : 0 }}
           transition={{ duration: 0.3, ease: "easeOut", delay: 0 }}
         />
         <div className="relative z-10">
@@ -182,7 +182,7 @@ const DiscordMemberListMock = ({ user }) => {
           </div>
         </div>
         <div className="relative z-10">
-          <div className="text-[#5fbb4e] font-medium text-base group-hover:underline flex items-center gap-1.5">
+          <div className="text-[#5fbb4e] font-medium text-base flex items-center gap-1.5">
             {user?.name ?? "Guest"}
             <Crown
               size={14}

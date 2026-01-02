@@ -1,28 +1,22 @@
 import React from "react";
 import Seo from "../components/Seo";
+import Footer from "../components/layout/Footer";
 
 const Help = () => {
-  const helpTitle = "ヘルプ / FAQ";
-  const helpDescription =
-    "よくある質問やサポート情報の一覧ページです。";
   return (
-    <div className="min-h-screen bg-[#f0f9ff] text-[#1e293b] flex items-center justify-center px-4">
-      <Seo
-        title={helpTitle}
-        description={helpDescription}
-        path="/help"
-        type="website"
-        noIndex
-      />
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-lg p-8 max-w-lg w-full text-center space-y-3">
-        <h1 className="text-2xl font-black text-slate-800">ヘルプ / FAQ</h1>
-        <p className="text-sm text-slate-600">
-          このページは準備中です。ご不便をおかけしますが、もうしばらくお待ちください。
-        </p>
-        <div className="text-xs text-slate-400">
-          必要な情報が見つからない場合はメンバーシップページからお問い合わせください。
+    <div className="min-h-screen bg-[#f0f9ff] text-[#1e293b] font-sans">
+      <style>{`
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; }
+        h1, h2, h3, .brand-font { font-family: 'Outfit', sans-serif; }
+      `}</style>
+      <main className="container mx-auto px-4 md:px-6 py-16 max-w-4xl">
+        <div className="rounded-3xl bg-white/80 border border-slate-100 shadow-sm px-6 py-16 text-center">
+          <p className="text-base md:text-lg font-semibold text-slate-600">
+            現在はヘルプページがありません。 (Dummy)
+          </p>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };

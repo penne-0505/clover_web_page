@@ -43,8 +43,8 @@ LP（Join Landing）に対して、技術SEO・オンページ・構造化デー
 - 本番ドメイン（canonical/robots/sitemap 用）: `minecraft-clover.pages.dev`
 - OG 共有画像のURL（1200x630 推奨）: 未決定
 - ロゴ画像のURL（構造化データ用）: `https://minecraft-clover.pages.dev/logo.jpg`
-- 正式なサイト名: `Minecraft Server 🍀`
-- 説明文: `Minecraft統合版（Bedrock Edition） に対応した、誰でも気軽に遊べる温かいコミュニティサーバーです。`
+- 正式なサイト名: `Minecraft Community 🌱`
+- 説明文: `Minecraftのコミュニティサーバーです。`
 - 公式SNSのURL（任意）: なし
 
 ## Tasks

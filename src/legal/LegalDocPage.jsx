@@ -116,7 +116,7 @@ const LegalDocPage = ({ docKey }) => {
 
   const handleTabClick = (key) => {
     if (key === doc?.key) return;
-    navigate("/legal");
+    navigate(`/legal/${key}`);
   };
 
   return (
