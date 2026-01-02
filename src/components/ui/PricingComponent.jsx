@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Sparkles, Zap, Repeat, Calendar } from "lucide-react";
 import { PLANS } from "../../constants/plans";
+import { PRICING_COPY } from "../../constants/pricingCopy";
 
 const deriveStateFromPlanKey = (planKey) => {
   switch (planKey) {
@@ -86,7 +87,7 @@ const PricingComponent = ({
           }`}
         >
           <Zap size={16} className={billingType === "one_time" ? "text-lime-500 fill-current" : ""} />
-          単発サポート
+          {PRICING_COPY.tabs.oneTime}
         </button>
         
         <button
@@ -99,7 +100,7 @@ const PricingComponent = ({
           }`}
         >
           <Repeat size={16} className={billingType === "subscription" ? "text-[#5fbb4e]" : ""} />
-          継続サポート
+          {PRICING_COPY.tabs.subscription}
         </button>
       </div>
 
@@ -118,7 +119,11 @@ const PricingComponent = ({
               <button
                 type="button"
                 aria-pressed={isYearly}
-                aria-label={isYearly ? "年払いを選択中。クリックで月払いに切り替え" : "月払いを選択中。クリックで年払いに切り替え"}
+                aria-label={
+                  isYearly
+                    ? PRICING_COPY.intervalToggle.aria.yearlyOn
+                    : PRICING_COPY.intervalToggle.aria.yearlyOff
+                }
                 onClick={() => {
                   if (locked) return;
                   setIsYearly((prev) => !prev);
@@ -126,7 +131,9 @@ const PricingComponent = ({
                 className="absolute inset-0 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 <span className="sr-only">
-                  {isYearly ? "年払いを選択中。クリックで月払いに切り替え" : "月払いを選択中。クリックで年払いに切り替え"}
+                  {isYearly
+                    ? PRICING_COPY.intervalToggle.aria.yearlyOn
+                    : PRICING_COPY.intervalToggle.aria.yearlyOff}
                 </span>
               </button>
               <div className="flex items-center gap-4 pointer-events-none">
@@ -135,7 +142,7 @@ const PricingComponent = ({
                     !isYearly ? "text-slate-800" : "text-slate-400"
                   }`}
                 >
-                  月払い
+                  {PRICING_COPY.intervalToggle.monthly}
                 </span>
 
                 <span
@@ -156,10 +163,10 @@ const PricingComponent = ({
                       isYearly ? "text-slate-800" : "text-slate-400"
                     }`}
                   >
-                    年払い
+                    {PRICING_COPY.intervalToggle.yearly}
                   </span>
                   <span className="bg-teal-100 text-teal-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide border border-teal-200 flex items-center gap-1">
-                    <Sparkles size={10} /> 2ヶ月分無料
+                    <Sparkles size={10} /> {PRICING_COPY.intervalToggle.yearlyBadge}
                   </span>
                 </span>
               </div>
@@ -174,7 +181,7 @@ const PricingComponent = ({
               className="text-sm font-bold text-slate-400 flex items-center gap-2"
             >
               <Calendar size={16} />
-              必要なときだけ、気軽に支援できます
+              {PRICING_COPY.intervalToggle.oneTimeHelper}
             </motion.div>
           )}
         </AnimatePresence>
@@ -209,20 +216,24 @@ const PricingComponent = ({
 
                 {isRecommended && (
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-teal-500 text-white text-[10px] font-black px-4 py-1.5 rounded-b-xl uppercase tracking-wider flex items-center gap-1 shadow-md whitespace-nowrap z-10">
-                    <Sparkles size={12} fill="currentColor" /> Best Value
+                    <Sparkles size={12} fill="currentColor" /> {PRICING_COPY.planCard.recommendedBadge}
                   </div>
                 )}
 
                 <div className={`${compact ? "mb-7" : "mb-8"} text-center relative z-10`}>
                   <h3 className={`font-black text-2xl mb-3 uppercase tracking-wide ${plan.textColor}`}>
-                    {plan.label} Plan
+                    {plan.label}
+                    {PRICING_COPY.planCard.planLabelSuffix}
                   </h3>
                   <div className="flex items-baseline justify-center gap-1 text-slate-800">
-                    <span className="text-xl font-bold">¥</span>
+                    <span className="text-xl font-bold">{PRICING_COPY.planCard.pricePrefix}</span>
                     <span className={`text-6xl font-black brand-font tracking-tighter ${plan.textColor}`}>
                       {plan.price.toLocaleString()}
                     </span>
-                    <span className="text-slate-400 font-bold text-sm">/ {plan.unit}</span>
+                    <span className="text-slate-400 font-bold text-sm">
+                      {PRICING_COPY.planCard.priceUnitPrefix}
+                      {plan.unit}
+                    </span>
                   </div>
                   <p className="text-sm text-slate-500 font-bold mt-4 bg-slate-50 inline-block px-4 py-1 rounded-full">
                     {plan.desc}
@@ -231,12 +242,7 @@ const PricingComponent = ({
 
                 <div className={`${compact ? "space-y-3 mb-9" : "space-y-4 mb-10"} flex-1 relative z-10`}>
                   <div className={`w-full h-px bg-slate-100 ${compact ? "mb-5" : "mb-6"}`} />
-                  {[
-                    "サポーター限定Discordロール", 
-                    "ゲーム内での優遇", 
-                    "限定チャンネルへのアクセス",
-                    "今後さらに追加予定...",
-                  ].filter(Boolean).map((feature, i) => (
+                  {PRICING_COPY.features.filter(Boolean).map((feature, i) => (
                     <motion.div 
                       key={i} 
                       initial={{ opacity: 0, x: -5 }}
@@ -263,7 +269,7 @@ const PricingComponent = ({
                   >
                     <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-200 rounded-2xl pointer-events-none"></span>
                     <span className="relative z-10 flex items-center gap-2">
-                      このプランで始める <ArrowRight size={20} strokeWidth={3} />
+                      {PRICING_COPY.cta} <ArrowRight size={20} strokeWidth={3} />
                     </span>
                   </button>
                 )}

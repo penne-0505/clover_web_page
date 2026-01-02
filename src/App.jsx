@@ -9,6 +9,7 @@ const Contract = lazy(() => import("./pages/Contract.jsx"));
 const Help = lazy(() => import("./pages/Help.jsx"));
 const AuthCallback = lazy(() => import("./pages/AuthCallback.jsx"));
 const Legal = lazy(() => import("./pages/Legal.jsx"));
+const LegalDoc = lazy(() => import("./pages/LegalDoc.jsx"));
 const Thanks = lazy(() => import("./pages/Thanks.jsx"));
 const Cancellation = lazy(() => import("./pages/Cancellation.jsx"));
 const Supporters = lazy(() => import("./pages/Supporters.jsx"));
@@ -35,7 +36,7 @@ const App = () => {
           <Route path="/join" element={<JoinLanding />} />
           <Route path="/membership" element={<Membership />} />
           <Route path="/legal" element={<Legal />} />
-          <Route path="/legal/:docKey" element={<Navigate to="/legal" replace />} />
+          <Route path="/legal/:docKey" element={<LegalDoc />} />
           <Route path="/contract" element={<Contract />} />
           <Route path="/thanks" element={<Thanks />} />
           <Route path="/cancellation" element={<Cancellation />} />

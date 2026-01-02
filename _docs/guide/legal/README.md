@@ -1,9 +1,9 @@
 ---
-title: Legal Documents Placeholder
-status: proposed
+title: Legal Documents Guide
+status: active
 draft_status: n/a
 created_at: 2025-12-07
-updated_at: 2025-12-26
+updated_at: 2026-01-02
 references:
   - ../../plan/Membership/roadmap/plan.md
 related_issues: []
@@ -11,11 +11,13 @@ related_prs: []
 ---
 
 ## 概要
-現在は法的文書の公開を行っていないため、本文は空としています。
+`/legal` で法的文書をタブ切り替え表示する構成です。
 
 ## 取扱い方針
-- `src/legal/content/` 配下の各ファイルは空のまま保持します。
-- `_docs/guide/legal/` 配下は履歴参照用の位置づけですが、現在は本文を削除しています。
+- `src/legal/content/` 配下に各文書の本文（Markdown）を配置します。
+- `src/legal/config.js` で文書のメタ情報と表示順を管理します。
 
-## ファイル一覧
+## 関連ファイル
 - `src/legal/content/` 配下の各ファイル
+- `src/legal/config.js`
+- `src/legal/LegalDocPage.jsx`

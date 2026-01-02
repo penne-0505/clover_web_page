@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { LogOut, Menu, X } from "lucide-react";
-import InteractiveClover from "../ui/InteractiveClover";
+import InteractiveSprout from "../ui/InteractiveSprout";
 import { beginDiscordLogin } from "../../utils/discordAuth";
 import discordIcon from "../../assets/icons/Discord-Symbol-White.svg";
 
@@ -65,7 +65,7 @@ const Header = ({
           whileTap={{ scale: 0.98 }}
         >
           <span className="text-lg md:text-xl font-extrabold tracking-tight brand-font text-slate-700 transition-colors duration-300 group-hover:text-[#5fbb4e]">
-            Minecraft Server <InteractiveClover />
+            Minecraft Community <InteractiveSprout />
           </span>
           {isMembershipPage && (
             <span className="text-[#5fbb4e] font-black text-xs uppercase tracking-wide hidden sm:inline-block bg-[#5fbb4e]/10 px-2 py-0.5 rounded-full border border-[#5fbb4e]/20 group-hover:bg-[#5fbb4e]/20 transition-colors">

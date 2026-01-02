@@ -9,7 +9,7 @@ references:
 ---
 
 ## Goal
-Discord 参加を主 CTA とした一般公開 LP のビジュアルデザインとデザイントークンを作成する。モバイル優先で、既存 LP（Minecraft Server 🍀）のトーンを継承する。
+Discord 参加を主 CTA とした一般公開 LP のビジュアルデザインとデザイントークンを作成する。モバイル優先で、既存 LP（Minecraft Community 🌱）のトーンを継承する。
 
 ## Deliverables
 - Figma コンポーネントライブラリ（ボタン、カード、CTA バナー、FAQ、フッター）。

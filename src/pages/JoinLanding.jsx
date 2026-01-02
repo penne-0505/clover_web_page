@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MessageCircle, Calendar, Map, X, ArrowRight, Flag, Camera, BookOpen, Crown, Gem, Hammer, Coffee, Wand2, PartyPopper, Sun, Sparkles, Ticket, Check, Mic, Phone, Quote, Clover, Sprout, Castle, Pickaxe } from 'lucide-react';
+import { MessageCircle, Calendar, Map, X, ArrowRight, Flag, Camera, BookOpen, Crown, Gem, Hammer, Coffee, Wand2, PartyPopper, Sun, Sparkles, Ticket, Check, Mic, Headset, Quote, Clover, Sprout, Castle, Pickaxe, Star } from 'lucide-react';
 import { joinImages, galleryImages } from '../data/lpImages';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -188,23 +188,6 @@ const PhotoFrame = ({
   </div>
 );
 
-const Badge = ({ children, color = 'brand' }) => {
-  const styles = {
-    brand: "bg-[#ecfdf5] text-[#15803d]",
-    discord: "bg-[#e0e7ff] text-[#3730a3]",
-    amber: "bg-[#fffbeb] text-[#b45309]",
-    rose: "bg-[#fff1f2] text-[#be123c]",
-    blue: "bg-[#eff6ff] text-[#1d4ed8]",
-    purple: "bg-purple-50 text-purple-700",
-    dark: "bg-slate-800 text-slate-200",
-  };
-  return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wider ${styles[color]}`}>
-      {children}
-    </span>
-  );
-};
-
 // --- Sections ---
 
 const Hero = () => {
@@ -243,7 +226,7 @@ const Hero = () => {
           <p className="font-body text-[#64748b] text-base md:text-xl leading-relaxed max-w-lg mx-auto md:mx-0 mb-6 md:mb-8">
             建築に没頭する人、冒険を楽しむ人、<br/>
             雑談で夜を過ごす人。<br/>
-            900名が集まるこのサーバーでは、<br/>
+            200名が集まるこのサーバーでは、<br/>
             どんな遊び方も、自然に共存しています。
           </p>
           
@@ -269,7 +252,7 @@ const Hero = () => {
                 onPointerDown={handleHeroPointerDown("main")}
               >
                 <PhotoFrame
-                  caption="花見イベント '24"
+                  caption="ダミーテキスト"
                   image={joinImages.heroMain}
                   sizes={IMAGE_SIZES.heroMain}
                   loading="eager"
@@ -284,7 +267,7 @@ const Hero = () => {
                 onPointerDown={handleHeroPointerDown("right")}
               >
                 <PhotoFrame
-                  caption="ラクダだ！"
+                  caption="ダミーテキスト"
                   image={joinImages.heroRight}
                   sizes={IMAGE_SIZES.heroRight}
                   loading="lazy"
@@ -299,7 +282,7 @@ const Hero = () => {
                 onPointerDown={handleHeroPointerDown("left")}
               >
                 <PhotoFrame
-                  caption="ふたりでブランコ"
+                  caption="ダミーテキスト"
                   image={joinImages.heroLeft}
                   sizes={IMAGE_SIZES.heroLeft}
                   loading="lazy"
@@ -311,10 +294,10 @@ const Hero = () => {
 
               {/* Decorative Icons - Hidden on very small screens to reduce clutter */}
               <div className="hidden sm:block absolute top-10 left-10 text-[#5fbb4e] opacity-20 transform -rotate-12 animate-pulse">
-                <Clover size={48} />
+                <Sprout size={48} />
               </div>
               <div className="hidden sm:block absolute bottom-20 right-10 text-[#f59e0b] opacity-20 transform rotate-12 animate-pulse">
-                <Sprout size={48} />
+                <Star size={48} />
               </div>
            </div>
         </div>
@@ -361,13 +344,13 @@ const MemoryLane = () => {
                 <div className="bg-white p-8 rounded-sm shadow-sm border border-[#e2e8f0]">
                     <Quote className="w-6 h-6 text-[#5fbb4e] mb-4 opacity-50" />
                     <p className="font-display text-lg leading-relaxed text-[#1e293b] mb-4">
-                        「このサーバーを一言で表すと、『ほかの人たちと気ままに楽しく、また自分の好きなことを自由にプレイできるサーバー』です。」
+                        「またまたあり事はたった大変と云っですて、こういうがたをしかいうたでって一種を云えてしまったた。」
                     </p>
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-200 border-4 border-white shadow-sm flex items-center justify-center overflow-hidden shrink-0">
-                          <span className="font-bold text-slate-400 text-base md:text-lg">m</span>
+                          <span className="font-bold text-slate-400 text-base md:text-lg">U</span>
                         </div>
-                        <span className="text-xs font-bold text-[#64748b]">maeji3</span>
+                        <span className="text-xs font-bold text-[#64748b]">ユーザー</span>
                     </div>
                 </div>
                 <div className="group cursor-pointer">
@@ -397,13 +380,13 @@ const MemoryLane = () => {
                 <div className="bg-white p-8 rounded-sm shadow-sm border border-[#e2e8f0]">
                     <Quote className="w-6 h-6 text-[#5fbb4e] mb-4 opacity-50" />
                     <p className="font-display text-lg leading-relaxed text-[#1e293b] mb-4">
-                        「毎シーズン、楽しいイベントや面白い制度などがあって毎日飽きません。」
+                        「権力からかつ張さんがそうしてされど訳ありあるん。嘉納さんはぴたり自分を考えでありなのなあるん。」
                     </p>
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-200 border-4 border-white shadow-sm flex items-center justify-center overflow-hidden shrink-0">
-                          <span className="font-bold text-slate-400 text-base md:text-lg">k</span>
+                          <span className="font-bold text-slate-400 text-base md:text-lg">U</span>
                         </div>
-                        <span className="text-xs font-bold text-[#64748b]">kyoharakakuti</span>
+                        <span className="text-xs font-bold text-[#64748b]">ユーザー</span>
                     </div>
                 </div>
             </div>
@@ -501,13 +484,13 @@ const MemoryLane = () => {
                 <div className="bg-white p-8 rounded-sm shadow-sm border border-[#e2e8f0]">
                     <Quote className="w-6 h-6 text-[#5fbb4e] mb-4 opacity-50" />
                     <p className="font-display text-lg leading-relaxed text-[#1e293b] mb-4">
-                        「非常に快適。初心者におすすめできる鯖。スタッフさんも優しく、参加者へのサポートも充実しており快適です。」
+                        「さて大体ちょっと他人が落ちつけていたたば、いにしえのあり様はこれ様々、妨害がけっして吹聴のようです。」
                     </p>
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-200 border-4 border-white shadow-sm flex items-center justify-center overflow-hidden shrink-0">
-                          <span className="font-bold text-slate-400 text-base md:text-lg">納</span>
+                          <span className="font-bold text-slate-400 text-base md:text-lg">U</span>
                         </div>
-                        <span className="text-xs font-bold text-[#64748b]">納豆巻き</span>
+                        <span className="text-xs font-bold text-[#64748b]">ユーザー</span>
                     </div>
                 </div>
                 <div className="group cursor-pointer">
@@ -552,17 +535,17 @@ const RefinedFeatures = () => {
           </h2>
           <p className="text-[#64748b] font-body text-base md:text-xl leading-relaxed mt-4 md:mt-6">
             義務もノルマもありません。<br/>
-            クランで繋がりを持つことも、一人で気ままに遊ぶことも。すべてはあなたの自由。<br/>
+            繋がりを持つことも、一人で気ままに遊ぶことも。すべてはあなたの自由。<br/>
             私たちが用意するのは、選択肢と安心できる環境だけです。
           </p>
         </div>
 
         {/* --- METAPHOR 1: The "To-Do List" (Freedom) --- */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
-          <div className="relative group perspective-1000 px-2 md:px-0">
+          <div className="relative perspective-1000 px-2 md:px-0">
              {/* The Clipboard / Notepad Visual */}
              <div className="absolute inset-0 bg-slate-200 rounded-[2rem] transform rotate-2 translate-y-2"></div>
-             <div className="relative bg-[#fffbeb] border border-slate-200 p-6 md:p-8 rounded-[2rem] shadow-xl transform transition-transform group-hover:-translate-y-1 group-hover:rotate-1 duration-500 overflow-hidden">
+             <div className="relative bg-[#fffbeb] border border-slate-200 p-6 md:p-8 rounded-[2rem] shadow-xl overflow-hidden">
                 
                 {/* Visual Header */}
                 <div className="flex items-center justify-between mb-8 border-b-2 border-dashed border-slate-200 pb-4">
@@ -644,12 +627,12 @@ const RefinedFeatures = () => {
         <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
           <div className="order-2 md:order-1">
             <h3 className="font-display font-black text-3xl md:text-4xl text-[#1e293b] mt-3">
-              クランで、<br/>
+              グループで、<br/>
               <span className="text-indigo-600">仲間と繋がる。</span>
             </h3>
             <p className="text-[#64748b] font-body text-base md:text-lg leading-relaxed mt-4 md:mt-6">
-              「クラン」は、共通の興味を持つ人たちのグループです。<br/>
-              既存のクランに参加するのも、新しく立ち上げるのも自由。<br/><br/>
+              「グループ」は、共通の興味を持つ人たちのグループです。<br/>
+              既存のグループに参加するのも、新しく立ち上げるのも自由。<br/><br/>
               建築ギルド、冒険パーティー、雑談コミュニティ。<br/>
               <strong>同じ「好き」を持つ人たちが、自然に集まっています。</strong>
             </p>
@@ -711,18 +694,18 @@ const RefinedFeatures = () => {
 
         {/* --- METAPHOR 3: "Support" --- */}
         <div className="grid grid-cols-1">
-          <Card className="bg-gradient-to-br from-white to-blue-50 !border-0 p-6 md:p-10 relative overflow-hidden group hover:translate-y-0">
-             <div className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-blue-200 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+          <Card className="bg-gradient-to-br from-white to-blue-50 !border-0 p-6 md:p-10 relative overflow-hidden transition-none hover:translate-y-0">
+             <div className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-blue-200 opacity-0" />
              <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 h-full">
-                <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-blue-500 border border-blue-100 shrink-0">
-                  <Phone size={24} className="md:w-8 md:h-8" />
+                <div className="w-12 h-12 md:w-14 md:h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 border border-blue-200 shrink-0">
+                  <Headset size={24} className="md:w-8 md:h-8" />
                 </div>
                 <div className="flex-grow">
                   <h3 className="font-display font-black text-xl md:text-2xl text-[#1e293b] mt-3 mb-2 md:mb-4">
                     安心のサポート体制
                   </h3>
                   <p className="font-body text-[#64748b] leading-relaxed mb-6">
-                    2019年からの実績があります。困りごとやトラブルには、経験豊富なスタッフが対応。初心者の方でも、安心して参加できる環境です。
+                    2015年からの実績があります。困りごとやトラブルには、経験豊富なスタッフが対応。初心者の方でも、安心して参加できる環境です。
                   </p>
                 </div>
              </div>
@@ -815,27 +798,27 @@ const Stories = () => {
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-8 md:mb-16">
           <div>
             <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Player Stories</h3>
-            <h2 className="font-display font-black text-3xl md:text-4xl text-[#1e293b] mt-3">
+            <h2 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-[#1e293b] mt-3">
               参加者の声
             </h2>
             <p className="text-[#64748b] font-body text-base md:text-lg leading-relaxed mt-4 md:mt-6">
               実際に参加している方々の感想です。<br/>
-              クランでの活動や日常の交流を通じて、<br/>
+              グループでの活動や日常の交流を通じて、<br/>
               多くの繋がりが生まれています。
             </p>
           </div>
           {/* Mobile: Vertical Stack, Desktop: Staggered Grid */}
           <div className="flex flex-col gap-6">
              <StoryCard 
-               author="n3kotarou" 
+               author="ユーザーA" 
                avatarColor="bg-blue-400"
-               text="入って3ヶ月経ちますが、スタッフ様の対応が良く、サーバー内の雰囲気も凄く良いサーバーです。マイクラ内では様々なイベントを楽しませて貰っております。新規さんでも楽しめるサーバーです。是非参加する事をおすすめします。"
+               text="すなわち出事は主義も待って始めう、また結構幸福う中止らを西洋の世界を出だろ簡潔で権力に下働きに云ってくれたためを、無論たまらなくたのん。"
              />
              <div className="md:translate-x-8">
                <StoryCard 
-                 author="黄金ネズミ" 
+                 author="ユーザーB" 
                  avatarColor="bg-orange-400"
-                 text="初心者、古参問わずにワイワイガヤガヤ楽しめるところが最大のウリと言っても良い。時折、繰り広げるイベントも趣向凝らされていて楽しめる。素晴らしいと思います。"
+                 text="いわゆる反駁はどんな手本の目標というますはませ、彼らかの人人間の例というなたくないと内談ありているでて、はなはだ何は漠然たる上岡田さんとしてでたらめですのをできるた。"
                />
              </div>
           </div>
@@ -873,16 +856,17 @@ const CTA = ({ discordInviteProps, discordInviteDisabledClass }) => {
                 ここで、始めよう。
               </h2>
               <p className="font-body text-slate-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mt-4 md:mt-6">
-                900名以上が参加するコミュニティ。<br/>
+                200名以上が参加するコミュニティ。<br/>
                 参加に必要なのは、Discordアカウントだけです。
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 md:mt-8 px-4 md:px-0">
                 <Button
                   variant="discord"
-                  className={`px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl w-full sm:w-auto shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all ${discordInviteDisabledClass}`}
+                  className={`px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl w-full sm:w-auto shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all relative overflow-hidden group ${discordInviteDisabledClass}`}
                   {...discordInviteProps}
                 >
+                   <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-xl pointer-events-none"></span>
                    <img src={discordIcon} alt="" aria-hidden="true" className="w-6 h-6 mr-2" />
                    Discordに参加する
                 </Button>
@@ -893,7 +877,7 @@ const CTA = ({ discordInviteProps, discordInviteDisabledClass }) => {
 
         <div className="absolute -top-10 -right-4 sm:-top-12 sm:-right-6 md:-top-12 md:-right-8 transform rotate-6 animate-float z-20">
            <PhotoFrame
-             caption="コケッ！"
+             caption="ダミー"
              image={joinImages.ctaRight}
              sizes={IMAGE_SIZES.ctaRight}
              className="w-[6.3rem] sm:w-40 md:w-48"
@@ -901,7 +885,7 @@ const CTA = ({ discordInviteProps, discordInviteDisabledClass }) => {
         </div>
         <div className="hidden md:block absolute -bottom-8 -left-8 transform -rotate-3 animate-float-delayed z-20">
            <PhotoFrame
-             caption="よるのお花見"
+             caption="ダミーテキスト"
              image={joinImages.ctaLeft}
              sizes={IMAGE_SIZES.ctaLeft}
              className="w-40"
@@ -922,7 +906,7 @@ export default function JoinLanding() {
     normalizeUrl(defaults.baseUrl, joinImages.heroMain?.src);
   const joinTitle = "Discordメンバー募集";
   const joinDescription =
-    "建築・冒険・雑談まで自由に遊べるDiscordコミュニティ。900名が集まるサーバーの参加方法や雰囲気を紹介します。";
+    "建築・冒険・雑談まで自由に遊べるDiscordコミュニティ。200名が集まるサーバーの参加方法や雰囲気を紹介します。";
   const organization = {
     "@type": "Organization",
     "@id": canonical ? `${canonical}#organization` : undefined,
