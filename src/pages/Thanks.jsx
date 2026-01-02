@@ -79,6 +79,11 @@ const GlowAura = () => (
 export default function Thanks() {
   const thanksTitle = "お申し込み完了";
   const thanksDescription = "メンバーシップ参加後の案内と次のステップをまとめています。";
+  const mockUser = {
+    name: "Supporter",
+    avatar: FALLBACK_AVATAR,
+  };
+  const mockTransactionId = "tx_mock_20240101";
   const [copied, setCopied] = useState(false);
   const [user, setUser] = useState(() => {
     try {
@@ -90,6 +95,8 @@ export default function Thanks() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const displayUser = user || mockUser;
+  const displayTransactionId = session?.transaction_id || mockTransactionId;
 
   const sessionId = useMemo(() => {
     const url = new URL(window.location.href);
@@ -149,8 +156,8 @@ export default function Thanks() {
   };
 
   const handleCopyId = () => {
-    if (!session?.transaction_id) return;
-    navigator.clipboard.writeText(session.transaction_id);
+    if (!displayTransactionId) return;
+    navigator.clipboard.writeText(displayTransactionId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -158,30 +165,34 @@ export default function Thanks() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const planName = useMemo(() => {
-    if (!session) return "";
+    if (!session) return "Supporter Plan";
     const plan = session.price_type ? PLANS[session.price_type] : null;
     if (plan?.label) return `${plan.label} Plan`;
     return session.line_item_name || "Supporter Plan";
   }, [session]);
 
   const amountText = useMemo(() => {
-    if (!session) return "";
+    if (!session) return formatCurrency(980, "JPY");
     return formatCurrency(session.amount_total, session.currency);
   }, [session]);
 
   const dateText = useMemo(() => {
-    if (!session?.created) return "";
+    if (!session?.created) {
+      return new Date().toLocaleDateString("ja-JP");
+    }
     const date = new Date(session.created);
     if (Number.isNaN(date.getTime())) return "";
     return date.toLocaleDateString("ja-JP");
   }, [session]);
 
   const paymentMethod = useMemo(() => {
-    if (!session) return "";
+    if (!session) return resolvePaymentMethodLabel(["card"]);
     return resolvePaymentMethodLabel(session.payment_method_types);
   }, [session]);
 
-  const accessBlocked = !loading && (error || !session);
+  // Portfolio: bypass access gate for /thanks.
+  // const accessBlocked = !loading && (error || !session);
+  const accessBlocked = false;
 
   return (
     <div className="min-h-screen bg-[#f0f9ff] font-sans selection:bg-[#5fbb4e]/30 text-slate-800 flex flex-col overflow-hidden relative">
@@ -190,7 +201,6 @@ export default function Thanks() {
         description={thanksDescription}
         path="/thanks"
         type="website"
-        noIndex
       />
       <style>{`
         .font-display { font-family: 'Outfit', sans-serif; }
@@ -268,7 +278,7 @@ export default function Thanks() {
             {/* Avatar with Ring */}
             <div className="relative z-10 p-2 bg-white rounded-full shadow-xl">
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-yellow-300 relative bg-slate-100">
-                <img src={user?.avatar || FALLBACK_AVATAR} alt="User" className="w-full h-full object-cover" />
+                <img src={displayUser.avatar || FALLBACK_AVATAR} alt="User" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-2 -right-2 bg-[#5fbb4e] text-white p-2 rounded-full border-4 border-white shadow-lg">
                 <Check size={20} strokeWidth={4} />
@@ -300,7 +310,7 @@ export default function Thanks() {
             </div>
             <h1 className="font-display text-4xl md:text-5xl font-black text-slate-800 mb-4 tracking-tight leading-tight">
               Thank You,<br/>
-              <span className="text-gradient-gold">{user?.name || "Supporter"}!</span>
+              <span className="text-gradient-gold">{displayUser.name || "Supporter"}!</span>
             </h1>
             <p className="font-body text-slate-500 font-bold text-lg md:text-xl max-w-sm mx-auto">
               ご支援ありがとうございます！<br/>
@@ -368,11 +378,11 @@ export default function Thanks() {
                         <div 
                           onClick={handleCopyId}
                           className={`group flex items-center justify-between bg-slate-50 border border-slate-100 rounded-lg px-3 py-2 transition-colors ${
-                            session?.transaction_id ? "cursor-pointer hover:bg-slate-100" : "cursor-default opacity-60"
+                            displayTransactionId ? "cursor-pointer hover:bg-slate-100" : "cursor-default opacity-60"
                           }`}
                         >
                           <span className="font-mono text-slate-600 text-xs">
-                            {session.transaction_id || "N/A"}
+                            {displayTransactionId || "N/A"}
                           </span>
                           <span className="text-slate-400 group-hover:text-[#5fbb4e] transition-colors">
                             {copied ? <Check size={14} /> : <Copy size={14} />}

@@ -40,6 +40,12 @@ export default function CancellationSuccessPage() {
   const cancellationTitle = "解約手続き";
   const cancellationDescription =
     "メンバーシップの解約状況と次回更新日の案内ページです。";
+  const mockSubscription = {
+    price_type: "sub_monthly",
+    plan_label: "Monthly Supporter",
+    current_period_end: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+    days_left: 30,
+  };
   const [user, setUser] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("discord_user")) || null;
@@ -47,12 +53,14 @@ export default function CancellationSuccessPage() {
       return null;
     }
   });
-  const [status, setStatus] = useState("loading");
-  const [subscription, setSubscription] = useState(null);
+  const [status, setStatus] = useState("cancelled");
+  const [subscription, setSubscription] = useState(mockSubscription);
   const [errorMessage, setErrorMessage] = useState("");
 
   const isLoggedIn = !!(user && user.id);
 
+  // Portfolio: bypass access gate for /cancellation.
+  /*
   useEffect(() => {
     if (!isLoggedIn) {
       setStatus("not-logged-in");
@@ -103,6 +111,7 @@ export default function CancellationSuccessPage() {
       controller.abort();
     };
   }, [isLoggedIn, user?.id]);
+  */
 
   const handleLogout = () => {
     localStorage.removeItem("discord_user");
@@ -139,7 +148,6 @@ export default function CancellationSuccessPage() {
         description={cancellationDescription}
         path="/cancellation"
         type="website"
-        noIndex
       />
       <style>{`
         .font-display { font-family: 'Outfit', sans-serif; }
