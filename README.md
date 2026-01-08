@@ -17,7 +17,7 @@ npm run dev   # http://localhost:5173 でプレビュー
 npm run build # プロダクションビルド
 ```
 
-TailwindはCDNロードで動作するため、追加のセットアップは不要です。
+Tailwind CSS は PostCSS 経由でビルドに組み込まれます。`src/styles.css` の `@tailwind` を起点に Vite で生成します。
 
 ## 環境変数（デプロイ/Functions）
 
@@ -50,7 +50,7 @@ Cloudflare Pages + Pages Functions を利用する前提の構成です。外部
 ## 技術スタック
 - Vite + React 18
 - framer-motion / lucide-react
-- Tailwind CDN（ビルドレスのユーティリティ適用）
+- Tailwind CSS（PostCSS 経由のビルド）
 
 ## ライセンス
 

@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { captureError } from "../analytics";
-import { consumeDiscordOAuthState } from "../utils/discordAuth";
+import {
+  consumeDiscordOAuthState,
+  exchangeDiscordCode,
+  extractDiscordOAuthParams,
+} from "../utils/discordAuth";
 
 const AuthCallback = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const code = url.searchParams.get("code");
-    const state = url.searchParams.get("state");
+    const { code, state } = extractDiscordOAuthParams(window.location.href);
 
     if (!code) {
       window.location.replace("/membership");
@@ -26,33 +28,10 @@ const AuthCallback = () => {
     const targetPath = parsedState.returnTo;
 
     (async () => {
-      try {
-        const res = await fetch("/discord-oauth", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ code }),
-        });
-        if (!res.ok) {
-          const text = await res.text();
-          captureError(new Error("OAuth exchange failed"), { text });
-          window.location.replace("/membership?auth=failed");
-          return;
-        }
-        const data = await res.json();
-        if (data.user?.id) {
-          const discordUser = {
-            id: data.user.id,
-            name: data.user.username,
-            discriminator: data.user.discriminator,
-            avatar: data.user.avatar
-              ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
-              : null,
-          };
-          sessionStorage.setItem("discord_user", JSON.stringify(discordUser));
-        }
-      } catch (err) {
-        captureError(err, { stage: "oauth_callback" });
+      const result = await exchangeDiscordCode(code, {
+        errorStage: "oauth_callback",
+      });
+      if (!result.ok) {
         window.location.replace("/membership?auth=failed");
         return;
       }
@@ -63,9 +42,9 @@ const AuthCallback = () => {
   }, [location.key]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f0f9ff] text-[#1e293b]">
+    <div className="min-h-screen flex items-center justify-center token-bg-main token-text-primary">
       <div className="text-center space-y-3">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#5fbb4e] mx-auto mb-4"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 token-border-accent mx-auto mb-4"></div>
         <p className="font-bold">Discord 認証から戻っています...</p>
         <p className="text-sm text-slate-500">数秒お待ちください。</p>
       </div>

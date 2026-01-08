@@ -13,7 +13,7 @@ const SupporterTicker = ({ showLabel = true }) => {
         return "text-teal-600 bg-teal-100 border-teal-200";
       case "Monthly":
       default:
-        return "text-[#5fbb4e] bg-[#5fbb4e]/10 border-green-200";
+        return "token-text-accent bg-[rgb(var(--color-accent-rgb)/0.1)] border-[rgb(var(--color-accent-rgb)/0.3)]";
     }
   };
 
@@ -37,7 +37,7 @@ const SupporterTicker = ({ showLabel = true }) => {
           avatar: s.avatar,
         }));
         setSupporters(mapped);
-      } catch (_) {
+      } catch {
         if (!aborted) {
           setSupporters([]);
           setFailed(true);

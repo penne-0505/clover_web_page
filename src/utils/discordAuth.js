@@ -1,6 +1,10 @@
-import { trackEvent } from "../analytics";
+import { trackEvent, captureError } from "../analytics";
 
 const STATE_STORAGE_KEY = "discord_oauth_state";
+const DISCORD_AUTHORIZE_URL = "https://discord.com/oauth2/authorize";
+const DEFAULT_SCOPE = "identify guilds.join";
+const DEFAULT_PROMPT = "consent";
+const DISCORD_AVATAR_BASE = "https://cdn.discordapp.com/avatars";
 
 export function createDiscordOAuthState(returnTo) {
   if (typeof window === "undefined") return "";
@@ -37,29 +41,142 @@ export function consumeDiscordOAuthState(state) {
  * Kick off Discord OAuth login flow.
  * @param {string} [returnToOverride] Optional path to return to after auth.
  */
-export function beginDiscordLogin(returnToOverride) {
+export function beginDiscordLogin(returnToOverride, options = {}) {
   if (typeof window === "undefined") return;
+  const context = options.context;
+  const returnTo = resolveReturnTo(returnToOverride || options.returnTo);
+  const state = options.state || createDiscordOAuthState(returnTo);
 
-  trackEvent("login_start", { provider: "discord" });
-
-  const appBaseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
-  const redirectUriClient =
-    import.meta.env.VITE_DISCORD_REDIRECT_URI || `${appBaseUrl}/auth/callback`;
-
-  const currentPath = `${window.location.pathname}${window.location.search}`;
-  const returnTo = returnToOverride || currentPath || "/membership";
-  const state = createDiscordOAuthState(returnTo);
-
-  const params = new URLSearchParams({
-    client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
-    response_type: "code",
-    scope: "identify guilds.join",
-    redirect_uri: redirectUriClient,
-    prompt: "consent",
-    state,
+  trackEvent("login_start", {
+    provider: "discord",
+    ...(context ? { context } : {}),
   });
 
-  window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
+  const authorizeUrl = buildDiscordAuthorizeUrl({
+    returnTo,
+    state,
+    scope: options.scope,
+    prompt: options.prompt,
+    redirectUri: options.redirectUri,
+    clientId: options.clientId,
+  });
+
+  window.location.href = authorizeUrl;
+}
+
+export function buildDiscordAuthorizeUrl({
+  returnTo,
+  state,
+  scope = DEFAULT_SCOPE,
+  prompt = DEFAULT_PROMPT,
+  redirectUri,
+  clientId,
+} = {}) {
+  const resolvedState = state || createDiscordOAuthState(returnTo || "/membership");
+  const resolvedClientId = clientId ?? import.meta.env.VITE_DISCORD_CLIENT_ID ?? "";
+  const resolvedRedirectUri = resolveRedirectUri(redirectUri);
+
+  const params = new URLSearchParams({
+    client_id: resolvedClientId,
+    response_type: "code",
+    scope,
+    redirect_uri: resolvedRedirectUri,
+    prompt,
+    state: resolvedState,
+  });
+
+  return `${DISCORD_AUTHORIZE_URL}?${params.toString()}`;
+}
+
+export function extractDiscordOAuthParams(href, { extraParams = [] } = {}) {
+  if (!href) return { code: null, state: null, cleanUrl: null };
+  try {
+    const url = new URL(href);
+    const code = url.searchParams.get("code");
+    const state = url.searchParams.get("state");
+    const paramsToClear = new Set(["code", "state", ...extraParams]);
+    let changed = false;
+
+    paramsToClear.forEach((key) => {
+      if (url.searchParams.has(key)) {
+        url.searchParams.delete(key);
+        changed = true;
+      }
+    });
+
+    return {
+      code,
+      state,
+      cleanUrl: changed ? url.toString() : null,
+    };
+  } catch {
+    return { code: null, state: null, cleanUrl: null };
+  }
+}
+
+export async function exchangeDiscordCode(
+  code,
+  {
+    captureResponseError = true,
+    errorMessage = "OAuth exchange failed",
+    errorContext = {},
+    errorStage = "oauth_callback",
+    persistUser = true,
+  } = {}
+) {
+  if (!code) return { ok: false, reason: "missing_code" };
+
+  try {
+    const res = await fetch("/discord-oauth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ code }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      if (captureResponseError) {
+        captureError(new Error(errorMessage), {
+          ...errorContext,
+          text,
+          status: res.status,
+        });
+      }
+      return { ok: false, status: res.status, text };
+    }
+
+    const data = await res.json();
+    const user = normalizeDiscordUser(data?.user);
+    if (user && persistUser) {
+      persistDiscordUser(user);
+    }
+
+    return { ok: true, user, data };
+  } catch (err) {
+    captureError(err, { stage: errorStage, ...errorContext });
+    return { ok: false, error: err };
+  }
+}
+
+export function normalizeDiscordUser(user) {
+  if (!user?.id) return null;
+  return {
+    id: user.id,
+    name: user.username,
+    discriminator: user.discriminator,
+    avatar: user.avatar ? `${DISCORD_AVATAR_BASE}/${user.id}/${user.avatar}.png` : null,
+  };
+}
+
+export function persistDiscordUser(user) {
+  if (typeof window === "undefined" || !user?.id) return null;
+  try {
+    sessionStorage.setItem("discord_user", JSON.stringify(user));
+  } catch {
+    // ignore storage failure
+  }
+  return user;
 }
 
 function base64UrlEncode(bytes) {
@@ -97,6 +214,22 @@ function storeOAuthNonce(nonce) {
   } catch {
     // ignore
   }
+}
+
+function resolveReturnTo(returnToOverride) {
+  if (returnToOverride) return returnToOverride;
+  if (typeof window === "undefined") return "/membership";
+  const currentPath = `${window.location.pathname}${window.location.search}`;
+  return currentPath || "/membership";
+}
+
+function resolveRedirectUri(redirectUriOverride) {
+  if (redirectUriOverride) return redirectUriOverride;
+  if (typeof window === "undefined") {
+    return import.meta.env.VITE_DISCORD_REDIRECT_URI || "";
+  }
+  const appBaseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
+  return import.meta.env.VITE_DISCORD_REDIRECT_URI || `${appBaseUrl}/auth/callback`;
 }
 
 function loadOAuthNonce() {

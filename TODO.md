@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 25` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 29` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -197,16 +197,17 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 
 ## In Progress
 
-- **Title**: [Enhance] Balance typography weights across all pages
-- **ID**: UI-Enhance-24
+- **Title**: [Refactor] Unify design tokens usage across UI
+- **ID**: UI-Refactor-26
 - **Priority**: P1
-- **Size**: M
+- **Size**: S
 - **Area**: UI
 - **Dependencies**: []
-- **Goal**: 全ページでRegular/Semi Bold/Boldの役割分担が明確になり、本文はRegular、UIラベルはSemi Bold、見出しはBold以上で統一されている。
+- **Goal**: `src/styles.css` のトークンを基準に、主要ページの色・影・フォント指定が統一されている。
 - **Steps**:
-  1. [ ] Planの "Tasks" に従い現状棚卸しとウェイト方針を整理
-  2. [ ] Planの "Tasks" に従いフォント読み込みとコンポーネント修正を実施
-  3. [ ] Planの "Test Plan" に従い主要ページを目視確認
-- **Description**: Regular寄りの見え方が全ページで続いている問題を修正し、Design Tokensに沿ったウェイト設計へ揃える。
-- **Plan**: `_docs/plan/UI/typography-weight/plan.md`
+  1. [x] `_docs/guide/design/design_tokens.md` と `src/styles.css` のトークンを棚卸し
+  2. [x] 直書き色の多いページ（`JoinLanding`, `Supporters`, `Membership`, `Contract`, `Thanks` など）を対象に置換方針を決定
+  3. [x] CSS変数 or Tailwind theme のいずれかに寄せて置換を実施
+  4. [ ] 主要ページの視認性と差分を確認し、必要なら微調整
+- **Description**: デザイントークンの分散定義と直書きを整理して一貫性を高める。参照: `_docs/guide/design/design_tokens.md`, `_docs/draft/UI/design-token-unification.md`, `src/styles.css`。Open questions: CSS変数ベースか Tailwind theme 拡張か、対象ページ範囲の優先順位。
+- **Plan**: None
