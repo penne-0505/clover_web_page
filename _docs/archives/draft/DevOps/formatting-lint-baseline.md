@@ -4,7 +4,8 @@ status: proposed
 draft_status: idea
 created_at: 2026-01-08
 updated_at: 2026-01-08
-references: []
+references:
+  - _docs/intent/DevOps/formatting-lint-baseline.md
 related_issues: []
 related_prs: []
 ---

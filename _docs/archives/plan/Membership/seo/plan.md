@@ -1,15 +1,16 @@
 ---
 title: LP SEO Master Plan
-status: proposed
+status: active
 draft_status: n/a
 created_at: 2025-12-22
-updated_at: 2025-12-22
+updated_at: 2026-01-08
 references:
   - _docs/standards/documentation_guidelines.md
   - _docs/standards/documentation_operations.md
   - _docs/guide/Membership/seo.md
   - perf_insight.md
   - README.md
+  - _docs/intent/Membership/lp-seo-master-plan.md
 related_issues: []
 related_prs: []
 ---

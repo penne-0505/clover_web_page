@@ -1,11 +1,12 @@
 ---
 title: Typography Weight Balance Across Pages
-status: proposed
+status: active
 draft_status: n/a
 created_at: 2026-01-08
 updated_at: 2026-01-08
 references:
-  - ../../guide/design/design_tokens.md
+  - _docs/guide/design/design_tokens.md
+  - _docs/intent/UI/typography-weight.md
 related_issues: []
 related_prs: []
 ---

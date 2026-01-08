@@ -3,9 +3,10 @@ title: LP SEO Operations
 status: active
 draft_status: n/a
 created_at: 2025-12-22
-updated_at: 2025-12-22
+updated_at: 2026-01-08
 references:
-  - _docs/plan/Membership/seo/plan.md
+  - _docs/archives/plan/Membership/seo/plan.md
+  - _docs/intent/Membership/lp-seo-master-plan.md
   - .env.example
 related_issues: []
 related_prs: []

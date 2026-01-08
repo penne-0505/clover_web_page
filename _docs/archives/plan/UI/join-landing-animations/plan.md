@@ -1,12 +1,13 @@
 ---
 title: JoinLanding Scroll/Load Animations
-status: proposed
+status: active
 draft_status: n/a
 created_at: 2026-01-08
 updated_at: 2026-01-08
 references:
-  - ../../../standards/documentation_guidelines.md
-  - ../../../standards/documentation_operations.md
+  - _docs/standards/documentation_guidelines.md
+  - _docs/standards/documentation_operations.md
+  - _docs/intent/UI/join-landing-animations.md
 related_issues: []
 related_prs: []
 ---
