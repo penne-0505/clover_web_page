@@ -31,28 +31,22 @@ export async function onRequest(context) {
 
     const subscriptions = result?.data || [];
     if (!subscriptions.length) {
-      return new Response(
-        JSON.stringify({ ok: false, reason: "not_found" }),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            "Cache-Control": "no-store",
-          },
-        }
-      );
+      return new Response(JSON.stringify({ ok: false, reason: "not_found" }), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store",
+        },
+      });
     }
 
-    const latest = subscriptions
-      .slice()
-      .sort((a, b) => {
-        const aValue = a.current_period_end || a.created || 0;
-        const bValue = b.current_period_end || b.created || 0;
-        return bValue - aValue;
-      })[0];
+    const latest = subscriptions.slice().sort((a, b) => {
+      const aValue = a.current_period_end || a.created || 0;
+      const bValue = b.current_period_end || b.created || 0;
+      return bValue - aValue;
+    })[0];
 
-    const cancelled =
-      latest.status === "canceled" || latest.cancel_at_period_end === true;
+    const cancelled = latest.status === "canceled" || latest.cancel_at_period_end === true;
 
     if (!cancelled) {
       return new Response(
@@ -80,8 +74,7 @@ export async function onRequest(context) {
 
     const nowMs = Date.now();
     const endMs = endTimestamp ? endTimestamp * 1000 : null;
-    const daysLeft =
-      endMs && endMs > nowMs ? Math.ceil((endMs - nowMs) / 86400000) : 0;
+    const daysLeft = endMs && endMs > nowMs ? Math.ceil((endMs - nowMs) / 86400000) : 0;
 
     const priceType = latest.metadata?.price_type || null;
     const lineItem = latest.items?.data?.[0];
@@ -103,10 +96,7 @@ export async function onRequest(context) {
           canceled_at: latest.canceled_at,
           ended_at: latest.ended_at,
           price_type: priceType,
-          plan_label:
-            lineItem?.price?.nickname ||
-            lineItem?.price?.product?.name ||
-            null,
+          plan_label: lineItem?.price?.nickname || lineItem?.price?.product?.name || null,
           days_left: daysLeft,
         },
       }),

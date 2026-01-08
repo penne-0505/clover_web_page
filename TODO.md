@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 23` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 31` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -180,27 +180,26 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 --- 
 
 ## Inbox
-- テスト拡充
 - ドキュメント更新
-- micro interactions のプロジェクト内トークン統一
 - ヘルプページ作成
 
 ---
 
 ## Backlog
-- **Title**: [Enhance] 見出しの光学左揃え補正を適用
-- **ID**: UI-Enhance-23
-- **Priority**: P2
-- **Size**: XS
-- **Area**: UI
+- **Title**: [Test] Backend Functionsのテスト拡充
+- **ID**: DevOps-Test-30
+- **Priority**: P1
+- **Size**: M
+- **Area**: DevOps
 - **Dependencies**: []
-- **Goal**: `Membership.jsx`/`JoinLanding.jsx`/`Checkout.jsx` の指定見出しが本文の左端に視覚的に揃っている。
+- **Goal**: Pages Functionsの主要フロー（Stripe/Discord認証/サポーター管理/telemetry）を自動テストで再現し、回帰の検知ができる状態にする。
 - **Steps**:
-  1. [ ] 対象の見出し要素と本文要素の現状クラスを確認する
-  2. [ ] 見出しごとの差分に応じた左方向の補正（margin/translate など）を追加する
-  3. [ ] 画面表示で本文との左揃えが改善していることを確認する
-- **Description**: 見出しの文字ごとの差による視覚的な左ズレを個別に補正する。
-- **Plan**: None
+  1. [ ] 既存のテスト/実行手順（`package.json` / `functions/`）を棚卸しする
+  2. [ ] Functionsごとの重要シナリオとリスク（決済/認証/権限）を整理する
+  3. [ ] `_docs/plan/DevOps/backend-test-expansion/plan.md` にテスト戦略・対象範囲・優先度を記載する
+  4. [ ] Planに基づいてテスト実装・CI連携の方針を定義する
+- **Description**: Cloudflare Pages Functionsのバックエンドに対して、回帰検知のためのテスト範囲と実装方針を拡充する。
+- **Plan**: `_docs/plan/DevOps/backend-test-expansion/plan.md`
 
 ---
 

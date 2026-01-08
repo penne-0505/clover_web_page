@@ -28,7 +28,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <RouteAnalytics />
-      <Suspense fallback={<div className="min-h-screen bg-[#f0f9ff]" />}>
+      <Suspense fallback={<div className="min-h-screen token-bg-main" />}>
         <Routes>
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/" element={<JoinLanding />} />

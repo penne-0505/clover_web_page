@@ -122,344 +122,343 @@ import membershipHero4_1024 from "../assets/images/membership/hero-4-1024.webp";
 import membershipHero4_1600 from "../assets/images/membership/hero-4-1600.webp";
 
 const withImage = (src, width, height, srcSetOverride) => ({
-	src,
-	srcSet: srcSetOverride || `${src} ${width}w`,
-	width,
-	height,
+  src,
+  srcSet: srcSetOverride || `${src} ${width}w`,
+  width,
+  height,
 });
 
-const buildSrcSet = (entries) =>
-	entries.map(({ src, width }) => `${src} ${width}w`).join(", ");
+const buildSrcSet = (entries) => entries.map(({ src, width }) => `${src} ${width}w`).join(", ");
 
 export const joinImages = {
-	heroMain: withImage(
-		landingHeroMain,
-		1792,
-		828,
-		buildSrcSet([
-			{ src: landingHeroMain480, width: 480 },
-			{ src: landingHeroMain640, width: 640 },
-			{ src: landingHeroMain1024, width: 1024 },
-			{ src: landingHeroMain1600, width: 1600 },
-			{ src: landingHeroMain, width: 1792 },
-		])
-	),
-	heroRight: withImage(
-		landingHeroRight,
-		1920,
-		1080,
-		buildSrcSet([
-			{ src: landingHeroRight240, width: 240 },
-			{ src: landingHeroRight320, width: 320 },
-			{ src: landingHeroRight480, width: 480 },
-			{ src: landingHeroRight640, width: 640 },
-			{ src: landingHeroRight1024, width: 1024 },
-			{ src: landingHeroRight1600, width: 1600 },
-			{ src: landingHeroRight, width: 1920 },
-		])
-	),
-	heroLeft: withImage(
-		landingHeroLeft,
-		2436,
-		1125,
-		buildSrcSet([
-			{ src: landingHeroLeft240, width: 240 },
-			{ src: landingHeroLeft320, width: 320 },
-			{ src: landingHeroLeft480, width: 480 },
-			{ src: landingHeroLeft640, width: 640 },
-			{ src: landingHeroLeft1024, width: 1024 },
-			{ src: landingHeroLeft1600, width: 1600 },
-			{ src: landingHeroLeft, width: 2436 },
-		])
-	),
-	memoryWide: withImage(
-		landingGalleryColumn21,
-		1627,
-		752,
-		buildSrcSet([
-			{ src: landingGalleryColumn21_320, width: 320 },
-			{ src: landingGalleryColumn21_480, width: 480 },
-			{ src: landingGalleryColumn21_640, width: 640 },
-			{ src: landingGalleryColumn21_1024, width: 1024 },
-			{ src: landingGalleryColumn21_1600, width: 1600 },
-			{ src: landingGalleryColumn21, width: 1627 },
-		])
-	),
-	memoryTall: withImage(
-		landingGalleryColumn11,
-		2048,
-		1536,
-		buildSrcSet([
-			{ src: landingGalleryColumn11_320, width: 320 },
-			{ src: landingGalleryColumn11_480, width: 480 },
-			{ src: landingGalleryColumn11_640, width: 640 },
-			{ src: landingGalleryColumn11_1024, width: 1024 },
-			{ src: landingGalleryColumn11_1600, width: 1600 },
-			{ src: landingGalleryColumn11, width: 2048 },
-		])
-	),
-	memoryStd1: withImage(
-		landingGalleryColumn22,
-		2048,
-		1536,
-		buildSrcSet([
-			{ src: landingGalleryColumn22_320, width: 320 },
-			{ src: landingGalleryColumn22_480, width: 480 },
-			{ src: landingGalleryColumn22_640, width: 640 },
-			{ src: landingGalleryColumn22_1024, width: 1024 },
-			{ src: landingGalleryColumn22_1600, width: 1600 },
-			{ src: landingGalleryColumn22, width: 2048 },
-		])
-	),
-	memoryStd2: withImage(
-		landingGalleryColumn25,
-		2048,
-		1536,
-		buildSrcSet([
-			{ src: landingGalleryColumn25_320, width: 320 },
-			{ src: landingGalleryColumn25_480, width: 480 },
-			{ src: landingGalleryColumn25_640, width: 640 },
-			{ src: landingGalleryColumn25_1024, width: 1024 },
-			{ src: landingGalleryColumn25_1600, width: 1600 },
-			{ src: landingGalleryColumn25, width: 2048 },
-		])
-	),
-	ctaRight: withImage(
-		landingCtaRight,
-		2048,
-		1536,
-		buildSrcSet([
-			{ src: landingCtaRight_320, width: 320 },
-			{ src: landingCtaRight_480, width: 480 },
-			{ src: landingCtaRight_640, width: 640 },
-			{ src: landingCtaRight_1024, width: 1024 },
-			{ src: landingCtaRight_1600, width: 1600 },
-			{ src: landingCtaRight, width: 2048 },
-		])
-	),
-	ctaLeft: withImage(
-		landingCtaLeft,
-		2160,
-		1620,
-		buildSrcSet([
-			{ src: landingCtaLeft_320, width: 320 },
-			{ src: landingCtaLeft_480, width: 480 },
-			{ src: landingCtaLeft_640, width: 640 },
-			{ src: landingCtaLeft_1024, width: 1024 },
-			{ src: landingCtaLeft_1600, width: 1600 },
-			{ src: landingCtaLeft, width: 2160 },
-		])
-	),
-	ctaOverlay: withImage(
-		landingCtaOverlay,
-		2816,
-		1536,
-		buildSrcSet([
-			{ src: landingCtaOverlay_320, width: 320 },
-			{ src: landingCtaOverlay_480, width: 480 },
-			{ src: landingCtaOverlay_640, width: 640 },
-			{ src: landingCtaOverlay_1024, width: 1024 },
-			{ src: landingCtaOverlay_1600, width: 1600 },
-			{ src: landingCtaOverlay, width: 2816 },
-		])
-	),
+  heroMain: withImage(
+    landingHeroMain,
+    1792,
+    828,
+    buildSrcSet([
+      { src: landingHeroMain480, width: 480 },
+      { src: landingHeroMain640, width: 640 },
+      { src: landingHeroMain1024, width: 1024 },
+      { src: landingHeroMain1600, width: 1600 },
+      { src: landingHeroMain, width: 1792 },
+    ])
+  ),
+  heroRight: withImage(
+    landingHeroRight,
+    1920,
+    1080,
+    buildSrcSet([
+      { src: landingHeroRight240, width: 240 },
+      { src: landingHeroRight320, width: 320 },
+      { src: landingHeroRight480, width: 480 },
+      { src: landingHeroRight640, width: 640 },
+      { src: landingHeroRight1024, width: 1024 },
+      { src: landingHeroRight1600, width: 1600 },
+      { src: landingHeroRight, width: 1920 },
+    ])
+  ),
+  heroLeft: withImage(
+    landingHeroLeft,
+    2436,
+    1125,
+    buildSrcSet([
+      { src: landingHeroLeft240, width: 240 },
+      { src: landingHeroLeft320, width: 320 },
+      { src: landingHeroLeft480, width: 480 },
+      { src: landingHeroLeft640, width: 640 },
+      { src: landingHeroLeft1024, width: 1024 },
+      { src: landingHeroLeft1600, width: 1600 },
+      { src: landingHeroLeft, width: 2436 },
+    ])
+  ),
+  memoryWide: withImage(
+    landingGalleryColumn21,
+    1627,
+    752,
+    buildSrcSet([
+      { src: landingGalleryColumn21_320, width: 320 },
+      { src: landingGalleryColumn21_480, width: 480 },
+      { src: landingGalleryColumn21_640, width: 640 },
+      { src: landingGalleryColumn21_1024, width: 1024 },
+      { src: landingGalleryColumn21_1600, width: 1600 },
+      { src: landingGalleryColumn21, width: 1627 },
+    ])
+  ),
+  memoryTall: withImage(
+    landingGalleryColumn11,
+    2048,
+    1536,
+    buildSrcSet([
+      { src: landingGalleryColumn11_320, width: 320 },
+      { src: landingGalleryColumn11_480, width: 480 },
+      { src: landingGalleryColumn11_640, width: 640 },
+      { src: landingGalleryColumn11_1024, width: 1024 },
+      { src: landingGalleryColumn11_1600, width: 1600 },
+      { src: landingGalleryColumn11, width: 2048 },
+    ])
+  ),
+  memoryStd1: withImage(
+    landingGalleryColumn22,
+    2048,
+    1536,
+    buildSrcSet([
+      { src: landingGalleryColumn22_320, width: 320 },
+      { src: landingGalleryColumn22_480, width: 480 },
+      { src: landingGalleryColumn22_640, width: 640 },
+      { src: landingGalleryColumn22_1024, width: 1024 },
+      { src: landingGalleryColumn22_1600, width: 1600 },
+      { src: landingGalleryColumn22, width: 2048 },
+    ])
+  ),
+  memoryStd2: withImage(
+    landingGalleryColumn25,
+    2048,
+    1536,
+    buildSrcSet([
+      { src: landingGalleryColumn25_320, width: 320 },
+      { src: landingGalleryColumn25_480, width: 480 },
+      { src: landingGalleryColumn25_640, width: 640 },
+      { src: landingGalleryColumn25_1024, width: 1024 },
+      { src: landingGalleryColumn25_1600, width: 1600 },
+      { src: landingGalleryColumn25, width: 2048 },
+    ])
+  ),
+  ctaRight: withImage(
+    landingCtaRight,
+    2048,
+    1536,
+    buildSrcSet([
+      { src: landingCtaRight_320, width: 320 },
+      { src: landingCtaRight_480, width: 480 },
+      { src: landingCtaRight_640, width: 640 },
+      { src: landingCtaRight_1024, width: 1024 },
+      { src: landingCtaRight_1600, width: 1600 },
+      { src: landingCtaRight, width: 2048 },
+    ])
+  ),
+  ctaLeft: withImage(
+    landingCtaLeft,
+    2160,
+    1620,
+    buildSrcSet([
+      { src: landingCtaLeft_320, width: 320 },
+      { src: landingCtaLeft_480, width: 480 },
+      { src: landingCtaLeft_640, width: 640 },
+      { src: landingCtaLeft_1024, width: 1024 },
+      { src: landingCtaLeft_1600, width: 1600 },
+      { src: landingCtaLeft, width: 2160 },
+    ])
+  ),
+  ctaOverlay: withImage(
+    landingCtaOverlay,
+    2816,
+    1536,
+    buildSrcSet([
+      { src: landingCtaOverlay_320, width: 320 },
+      { src: landingCtaOverlay_480, width: 480 },
+      { src: landingCtaOverlay_640, width: 640 },
+      { src: landingCtaOverlay_1024, width: 1024 },
+      { src: landingCtaOverlay_1600, width: 1600 },
+      { src: landingCtaOverlay, width: 2816 },
+    ])
+  ),
 };
 
 export const galleryImages = {
-	column1: [
-		withImage(
-			landingGalleryColumn11,
-			2048,
-			1536,
-			buildSrcSet([
-				{ src: landingGalleryColumn11_320, width: 320 },
-				{ src: landingGalleryColumn11_480, width: 480 },
-				{ src: landingGalleryColumn11_640, width: 640 },
-				{ src: landingGalleryColumn11_1024, width: 1024 },
-				{ src: landingGalleryColumn11_1600, width: 1600 },
-				{ src: landingGalleryColumn11, width: 2048 },
-			])
-		),
-		withImage(
-			landingGalleryColumn12,
-			2160,
-			1620,
-			buildSrcSet([
-				{ src: landingGalleryColumn12_320, width: 320 },
-				{ src: landingGalleryColumn12_480, width: 480 },
-				{ src: landingGalleryColumn12_640, width: 640 },
-				{ src: landingGalleryColumn12_1024, width: 1024 },
-				{ src: landingGalleryColumn12_1600, width: 1600 },
-				{ src: landingGalleryColumn12, width: 2160 },
-			])
-		),
-		withImage(
-			landingGalleryColumn13,
-			1920,
-			1080,
-			buildSrcSet([
-				{ src: landingGalleryColumn13_320, width: 320 },
-				{ src: landingGalleryColumn13_480, width: 480 },
-				{ src: landingGalleryColumn13_640, width: 640 },
-				{ src: landingGalleryColumn13_1024, width: 1024 },
-				{ src: landingGalleryColumn13_1600, width: 1600 },
-				{ src: landingGalleryColumn13, width: 1920 },
-			])
-		),
-	],
-	column2: [
-		withImage(
-			landingGalleryColumn21,
-			1627,
-			752,
-			buildSrcSet([
-				{ src: landingGalleryColumn21_320, width: 320 },
-				{ src: landingGalleryColumn21_480, width: 480 },
-				{ src: landingGalleryColumn21_640, width: 640 },
-				{ src: landingGalleryColumn21_1024, width: 1024 },
-				{ src: landingGalleryColumn21_1600, width: 1600 },
-				{ src: landingGalleryColumn21, width: 1627 },
-			])
-		),
-		withImage(
-			landingGalleryColumn22,
-			2048,
-			1536,
-			buildSrcSet([
-				{ src: landingGalleryColumn22_320, width: 320 },
-				{ src: landingGalleryColumn22_480, width: 480 },
-				{ src: landingGalleryColumn22_640, width: 640 },
-				{ src: landingGalleryColumn22_1024, width: 1024 },
-				{ src: landingGalleryColumn22_1600, width: 1600 },
-				{ src: landingGalleryColumn22, width: 2048 },
-			])
-		),
-		withImage(
-			landingGalleryColumn23,
-			1792,
-			828,
-			buildSrcSet([
-				{ src: landingGalleryColumn23_320, width: 320 },
-				{ src: landingGalleryColumn23_480, width: 480 },
-				{ src: landingGalleryColumn23_640, width: 640 },
-				{ src: landingGalleryColumn23_1024, width: 1024 },
-				{ src: landingGalleryColumn23_1600, width: 1600 },
-				{ src: landingGalleryColumn23, width: 1792 },
-			])
-		),
-		withImage(
-			landingGalleryColumn24,
-			2160,
-			1620,
-			buildSrcSet([
-				{ src: landingGalleryColumn24_320, width: 320 },
-				{ src: landingGalleryColumn24_480, width: 480 },
-				{ src: landingGalleryColumn24_640, width: 640 },
-				{ src: landingGalleryColumn24_1024, width: 1024 },
-				{ src: landingGalleryColumn24_1600, width: 1600 },
-				{ src: landingGalleryColumn24, width: 2160 },
-			])
-		),
-		withImage(
-			landingGalleryColumn25,
-			2048,
-			1536,
-			buildSrcSet([
-				{ src: landingGalleryColumn25_320, width: 320 },
-				{ src: landingGalleryColumn25_480, width: 480 },
-				{ src: landingGalleryColumn25_640, width: 640 },
-				{ src: landingGalleryColumn25_1024, width: 1024 },
-				{ src: landingGalleryColumn25_1600, width: 1600 },
-				{ src: landingGalleryColumn25, width: 2048 },
-			])
-		),
-	],
-	column3: [
-		withImage(
-			landingGalleryColumn31,
-			1920,
-			1080,
-			buildSrcSet([
-				{ src: landingGalleryColumn31_320, width: 320 },
-				{ src: landingGalleryColumn31_480, width: 480 },
-				{ src: landingGalleryColumn31_640, width: 640 },
-				{ src: landingGalleryColumn31_1024, width: 1024 },
-				{ src: landingGalleryColumn31_1600, width: 1600 },
-				{ src: landingGalleryColumn31, width: 1920 },
-			])
-		),
-		withImage(
-			landingGalleryColumn32,
-			2160,
-			1620,
-			buildSrcSet([
-				{ src: landingGalleryColumn32_320, width: 320 },
-				{ src: landingGalleryColumn32_480, width: 480 },
-				{ src: landingGalleryColumn32_640, width: 640 },
-				{ src: landingGalleryColumn32_1024, width: 1024 },
-				{ src: landingGalleryColumn32_1600, width: 1600 },
-				{ src: landingGalleryColumn32, width: 2160 },
-			])
-		),
-		withImage(
-			landingGalleryColumn33,
-			2048,
-			1536,
-			buildSrcSet([
-				{ src: landingGalleryColumn33_320, width: 320 },
-				{ src: landingGalleryColumn33_480, width: 480 },
-				{ src: landingGalleryColumn33_640, width: 640 },
-				{ src: landingGalleryColumn33_1024, width: 1024 },
-				{ src: landingGalleryColumn33_1600, width: 1600 },
-				{ src: landingGalleryColumn33, width: 2048 },
-			])
-		),
-	],
+  column1: [
+    withImage(
+      landingGalleryColumn11,
+      2048,
+      1536,
+      buildSrcSet([
+        { src: landingGalleryColumn11_320, width: 320 },
+        { src: landingGalleryColumn11_480, width: 480 },
+        { src: landingGalleryColumn11_640, width: 640 },
+        { src: landingGalleryColumn11_1024, width: 1024 },
+        { src: landingGalleryColumn11_1600, width: 1600 },
+        { src: landingGalleryColumn11, width: 2048 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn12,
+      2160,
+      1620,
+      buildSrcSet([
+        { src: landingGalleryColumn12_320, width: 320 },
+        { src: landingGalleryColumn12_480, width: 480 },
+        { src: landingGalleryColumn12_640, width: 640 },
+        { src: landingGalleryColumn12_1024, width: 1024 },
+        { src: landingGalleryColumn12_1600, width: 1600 },
+        { src: landingGalleryColumn12, width: 2160 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn13,
+      1920,
+      1080,
+      buildSrcSet([
+        { src: landingGalleryColumn13_320, width: 320 },
+        { src: landingGalleryColumn13_480, width: 480 },
+        { src: landingGalleryColumn13_640, width: 640 },
+        { src: landingGalleryColumn13_1024, width: 1024 },
+        { src: landingGalleryColumn13_1600, width: 1600 },
+        { src: landingGalleryColumn13, width: 1920 },
+      ])
+    ),
+  ],
+  column2: [
+    withImage(
+      landingGalleryColumn21,
+      1627,
+      752,
+      buildSrcSet([
+        { src: landingGalleryColumn21_320, width: 320 },
+        { src: landingGalleryColumn21_480, width: 480 },
+        { src: landingGalleryColumn21_640, width: 640 },
+        { src: landingGalleryColumn21_1024, width: 1024 },
+        { src: landingGalleryColumn21_1600, width: 1600 },
+        { src: landingGalleryColumn21, width: 1627 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn22,
+      2048,
+      1536,
+      buildSrcSet([
+        { src: landingGalleryColumn22_320, width: 320 },
+        { src: landingGalleryColumn22_480, width: 480 },
+        { src: landingGalleryColumn22_640, width: 640 },
+        { src: landingGalleryColumn22_1024, width: 1024 },
+        { src: landingGalleryColumn22_1600, width: 1600 },
+        { src: landingGalleryColumn22, width: 2048 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn23,
+      1792,
+      828,
+      buildSrcSet([
+        { src: landingGalleryColumn23_320, width: 320 },
+        { src: landingGalleryColumn23_480, width: 480 },
+        { src: landingGalleryColumn23_640, width: 640 },
+        { src: landingGalleryColumn23_1024, width: 1024 },
+        { src: landingGalleryColumn23_1600, width: 1600 },
+        { src: landingGalleryColumn23, width: 1792 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn24,
+      2160,
+      1620,
+      buildSrcSet([
+        { src: landingGalleryColumn24_320, width: 320 },
+        { src: landingGalleryColumn24_480, width: 480 },
+        { src: landingGalleryColumn24_640, width: 640 },
+        { src: landingGalleryColumn24_1024, width: 1024 },
+        { src: landingGalleryColumn24_1600, width: 1600 },
+        { src: landingGalleryColumn24, width: 2160 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn25,
+      2048,
+      1536,
+      buildSrcSet([
+        { src: landingGalleryColumn25_320, width: 320 },
+        { src: landingGalleryColumn25_480, width: 480 },
+        { src: landingGalleryColumn25_640, width: 640 },
+        { src: landingGalleryColumn25_1024, width: 1024 },
+        { src: landingGalleryColumn25_1600, width: 1600 },
+        { src: landingGalleryColumn25, width: 2048 },
+      ])
+    ),
+  ],
+  column3: [
+    withImage(
+      landingGalleryColumn31,
+      1920,
+      1080,
+      buildSrcSet([
+        { src: landingGalleryColumn31_320, width: 320 },
+        { src: landingGalleryColumn31_480, width: 480 },
+        { src: landingGalleryColumn31_640, width: 640 },
+        { src: landingGalleryColumn31_1024, width: 1024 },
+        { src: landingGalleryColumn31_1600, width: 1600 },
+        { src: landingGalleryColumn31, width: 1920 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn32,
+      2160,
+      1620,
+      buildSrcSet([
+        { src: landingGalleryColumn32_320, width: 320 },
+        { src: landingGalleryColumn32_480, width: 480 },
+        { src: landingGalleryColumn32_640, width: 640 },
+        { src: landingGalleryColumn32_1024, width: 1024 },
+        { src: landingGalleryColumn32_1600, width: 1600 },
+        { src: landingGalleryColumn32, width: 2160 },
+      ])
+    ),
+    withImage(
+      landingGalleryColumn33,
+      2048,
+      1536,
+      buildSrcSet([
+        { src: landingGalleryColumn33_320, width: 320 },
+        { src: landingGalleryColumn33_480, width: 480 },
+        { src: landingGalleryColumn33_640, width: 640 },
+        { src: landingGalleryColumn33_1024, width: 1024 },
+        { src: landingGalleryColumn33_1600, width: 1600 },
+        { src: landingGalleryColumn33, width: 2048 },
+      ])
+    ),
+  ],
 };
 
 export const homeHeroImages = [
-	withImage(
-		membershipHero1,
-		1792,
-		828,
-		buildSrcSet([
-			{ src: membershipHero1_640, width: 640 },
-			{ src: membershipHero1_1024, width: 1024 },
-			{ src: membershipHero1_1600, width: 1600 },
-			{ src: membershipHero1, width: 1792 },
-		])
-	),
-	withImage(
-		membershipHero2,
-		1792,
-		828,
-		buildSrcSet([
-			{ src: membershipHero2_640, width: 640 },
-			{ src: membershipHero2_1024, width: 1024 },
-			{ src: membershipHero2_1600, width: 1600 },
-			{ src: membershipHero2, width: 1792 },
-		])
-	),
-	withImage(
-		membershipHero3,
-		1627,
-		752,
-		buildSrcSet([
-			{ src: membershipHero3_640, width: 640 },
-			{ src: membershipHero3_1024, width: 1024 },
-			{ src: membershipHero3_1600, width: 1600 },
-			{ src: membershipHero3, width: 1627 },
-		])
-	),
-	withImage(
-		membershipHero4,
-		1920,
-		1080,
-		buildSrcSet([
-			{ src: membershipHero4_640, width: 640 },
-			{ src: membershipHero4_1024, width: 1024 },
-			{ src: membershipHero4_1600, width: 1600 },
-			{ src: membershipHero4, width: 1920 },
-		])
-	),
+  withImage(
+    membershipHero1,
+    1792,
+    828,
+    buildSrcSet([
+      { src: membershipHero1_640, width: 640 },
+      { src: membershipHero1_1024, width: 1024 },
+      { src: membershipHero1_1600, width: 1600 },
+      { src: membershipHero1, width: 1792 },
+    ])
+  ),
+  withImage(
+    membershipHero2,
+    1792,
+    828,
+    buildSrcSet([
+      { src: membershipHero2_640, width: 640 },
+      { src: membershipHero2_1024, width: 1024 },
+      { src: membershipHero2_1600, width: 1600 },
+      { src: membershipHero2, width: 1792 },
+    ])
+  ),
+  withImage(
+    membershipHero3,
+    1627,
+    752,
+    buildSrcSet([
+      { src: membershipHero3_640, width: 640 },
+      { src: membershipHero3_1024, width: 1024 },
+      { src: membershipHero3_1600, width: 1600 },
+      { src: membershipHero3, width: 1627 },
+    ])
+  ),
+  withImage(
+    membershipHero4,
+    1920,
+    1080,
+    buildSrcSet([
+      { src: membershipHero4_640, width: 640 },
+      { src: membershipHero4_1024, width: 1024 },
+      { src: membershipHero4_1600, width: 1600 },
+      { src: membershipHero4, width: 1920 },
+    ])
+  ),
 ];

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+public/
+coverage/
+package-lock.json
+_docs/
+README.md
+CONTRIBUTING.md

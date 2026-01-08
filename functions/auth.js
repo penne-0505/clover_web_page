@@ -97,12 +97,7 @@ async function verifySignature(data, signature, secret) {
     false,
     ["verify"]
   );
-  return crypto.subtle.verify(
-    "HMAC",
-    key,
-    base64UrlDecode(signature),
-    encoder.encode(data)
-  );
+  return crypto.subtle.verify("HMAC", key, base64UrlDecode(signature), encoder.encode(data));
 }
 
 function base64UrlEncode(bytes) {
@@ -144,13 +139,7 @@ function getCookie(request, name) {
 
 function buildCookie(name, value, { maxAge, request }) {
   const secure = new URL(request.url).protocol === "https:";
-  const parts = [
-    `${name}=${value}`,
-    "Path=/",
-    "HttpOnly",
-    "SameSite=Lax",
-    `Max-Age=${maxAge}`,
-  ];
+  const parts = [`${name}=${value}`, "Path=/", "HttpOnly", "SameSite=Lax", `Max-Age=${maxAge}`];
   if (secure) {
     parts.push("Secure");
   }

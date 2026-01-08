@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Crown, Star, Shield } from "lucide-react";
+import { Search, Crown, Star } from "lucide-react";
 import Header from "../components/layout/Header.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import { beginDiscordLogin } from "../utils/discordAuth";
@@ -13,9 +13,9 @@ const planStyles = {
     border: "border-amber-200",
   },
   Monthly: {
-    color: "text-[#5fbb4e]",
-    bg: "bg-[#5fbb4e]/10",
-    border: "border-[#5fbb4e]/30",
+    color: "token-text-accent",
+    bg: "token-bg-accent-soft",
+    border: "border-[color:rgb(var(--color-accent-rgb)/0.3)]",
   },
   Ticket: {
     color: "text-blue-500",
@@ -38,8 +38,10 @@ const SupporterCard = ({ supporter, index }) => (
     className={`bg-white rounded-2xl p-6 border ${supporter.border} shadow-sm relative overflow-hidden group`}
   >
     {/* Decorative Background */}
-    <div className={`absolute top-0 right-0 w-24 h-24 rounded-bl-full opacity-20 transition-transform group-hover:scale-110 ${supporter.bg.replace('/10', '')}`} />
-    
+    <div
+      className={`absolute top-0 right-0 w-24 h-24 rounded-bl-full opacity-20 transition-transform group-hover:scale-110 ${supporter.bg.replace("/10", "")}`}
+    />
+
     <div className="flex items-start gap-4 relative z-10">
       <div className="relative">
         <img
@@ -53,23 +55,21 @@ const SupporterCard = ({ supporter, index }) => (
           </div>
         )}
       </div>
-      
+
       <div className="flex-1">
         <div className="flex items-center gap-2 mb-1">
-          <h3 className="font-bold text-slate-800 text-lg leading-tight">
-            {supporter.name}
-          </h3>
+          <h3 className="font-bold text-slate-800 text-lg leading-tight">{supporter.name}</h3>
         </div>
-        
+
         <div className="flex flex-wrap gap-2 mb-3">
-          <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider ${supporter.bg} ${supporter.color}`}>
+          <span
+            className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${supporter.bg} ${supporter.color}`}
+          >
             {supporter.plan} Plan
           </span>
         </div>
 
-        <div className="text-[10px] text-slate-400 font-medium">
-          Joined: {supporter.joinedAt}
-        </div>
+        <div className="text-[10px] text-slate-400 font-bold">Joined: {supporter.joinedAt}</div>
       </div>
     </div>
   </motion.div>
@@ -79,8 +79,7 @@ const PAGE_SIZE = 9;
 
 const Supporters = () => {
   const supportersTitle = "サポーター一覧";
-  const supportersDescription =
-    "コミュニティを支えてくれているサポーターの一覧ページです。";
+  const supportersDescription = "コミュニティを支えてくれているサポーターの一覧ページです。";
   const [searchTerm, setSearchTerm] = useState("");
   const [supporters, setSupporters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -120,7 +119,7 @@ const Supporters = () => {
         });
         setSupporters(mapped);
         setCurrentPage(1);
-      } catch (err) {
+      } catch {
         if (!aborted) {
           setError("サポーターの取得に失敗しました。");
         }
@@ -139,21 +138,20 @@ const Supporters = () => {
   }, [searchTerm]);
 
   const handleLogin = () => beginDiscordLogin();
-  const handleLogout = () => { sessionStorage.removeItem("discord_user"); setUser(null); };
+  const handleLogout = () => {
+    sessionStorage.removeItem("discord_user");
+    setUser(null);
+  };
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const filtered = supporters.filter((s) =>
     s.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const safeCurrentPage =
-    totalPages === 0 ? 1 : Math.min(currentPage, totalPages);
+  const safeCurrentPage = totalPages === 0 ? 1 : Math.min(currentPage, totalPages);
   const paginatedSupporters = loading
     ? supporters
-    : filtered.slice(
-        (safeCurrentPage - 1) * PAGE_SIZE,
-        safeCurrentPage * PAGE_SIZE
-      );
+    : filtered.slice((safeCurrentPage - 1) * PAGE_SIZE, safeCurrentPage * PAGE_SIZE);
 
   const buildPageButtons = () => {
     if (totalPages <= 1) return [];
@@ -171,7 +169,7 @@ const Supporters = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans selection:bg-[#5fbb4e]/30 text-slate-800">
+    <div className="min-h-screen token-bg-alt font-sans selection:bg-[color:rgb(var(--color-accent-rgb)/0.3)] token-text-primary">
       <Seo
         title={supportersTitle}
         description={supportersDescription}
@@ -179,11 +177,6 @@ const Supporters = () => {
         type="website"
         noIndex
       />
-      <style>{`
-        .font-display { font-family: 'Outfit', sans-serif; }
-        .font-body { font-family: 'M PLUS Rounded 1c', sans-serif; }
-      `}</style>
-
       <Header
         isLoggedIn={!!user}
         user={user}
@@ -194,22 +187,20 @@ const Supporters = () => {
 
       <main className="pt-24 pb-12 px-4 md:px-6">
         <div className="max-w-5xl mx-auto">
-          
           {/* Page Header */}
           <div className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider mb-4"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-500 type-kicker mb-4"
             >
               <Star size={14} className="text-amber-400 fill-current" />
               Community Heroes
             </motion.div>
-            <h1 className="font-display text-3xl md:text-4xl font-black text-slate-800 mb-4">
-              Our Supporters
-            </h1>
-            <p className="font-body text-slate-500 font-medium max-w-xl mx-auto">
-              サーバーを支えてくれている素晴らしいメンバーたちです。<br className="hidden md:inline"/>
+            <h1 className="font-display type-h1 token-text-display mb-4">Our Supporters</h1>
+            <p className="font-body type-body token-text-secondary max-w-xl mx-auto">
+              サーバーを支えてくれている素晴らしいメンバーたちです。
+              <br className="hidden md:inline" />
               彼らの支援によって、私たちは新しい冒険を作り続けることができます。
             </p>
           </div>
@@ -217,16 +208,19 @@ const Supporters = () => {
           {/* Controls */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
             <div className="relative w-full md:w-96">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                size={18}
+              />
               <input
                 type="text"
                 placeholder="名前で検索..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#5fbb4e]/50 focus:border-[#5fbb4e] transition-all placeholder:text-slate-400"
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[color:rgb(var(--color-accent-rgb)/0.5)] focus:border-[var(--color-accent)] transition-all placeholder:text-slate-400"
               />
             </div>
-            
+
             <div className="flex items-center justify-end w-full md:w-auto">
               <div className="text-xs font-bold text-slate-400 px-2">
                 Total: <span className="text-slate-800">{loading ? "..." : filtered.length}</span>
@@ -259,7 +253,7 @@ const Supporters = () => {
                     onClick={() => !isEllipsis && setCurrentPage(page)}
                     className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold transition-all ${
                       isActive
-                        ? "bg-[#5fbb4e] text-white shadow-md"
+                        ? "token-bg-accent text-white shadow-md"
                         : "bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-default"
                     }`}
                   >
@@ -269,7 +263,6 @@ const Supporters = () => {
               })}
             </div>
           )}
-
         </div>
       </main>
 

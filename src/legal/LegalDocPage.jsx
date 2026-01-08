@@ -42,71 +42,61 @@ const LegalDocPage = ({ docKey }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [doc?.key]);
 
-  const counts = useMemo(() => new Map(), [doc?.content]);
-  const sanitizedContent = useMemo(
-    () => stripFrontMatter(doc?.content || ""),
-    [doc?.content]
-  );
+  const counts = new Map();
+  const sanitizedContent = useMemo(() => stripFrontMatter(doc?.content || ""), [doc?.content]);
 
-  const renderers = useMemo(
-    () => ({
-      h2({ node, children, ...props }) {
-        const title = children?.[0]?.toString?.() ?? "";
-        const base = slugify(title);
-        const current = counts.get(base) ?? 0;
-        const id = current === 0 ? base : `${base}-${current}`;
-        counts.set(base, current + 1);
-        return (
-          <h2
-            id={id}
-            {...props}
-            className="scroll-mt-24 text-2xl font-black text-slate-800 mt-10 mb-3"
-          >
-            {children}
-          </h2>
-        );
-      },
-      h3({ node, children, ...props }) {
-        const title = children?.[0]?.toString?.() ?? "";
-        const base = slugify(title);
-        const current = counts.get(base) ?? 0;
-        const id = current === 0 ? base : `${base}-${current}`;
-        counts.set(base, current + 1);
-        return (
-          <h3
-            id={id}
-            {...props}
-            className="scroll-mt-24 text-xl font-bold text-slate-800 mt-6 mb-2"
-          >
-            {children}
-          </h3>
-        );
-      },
-      a({ node, ...props }) {
-        return (
-          <a
-            {...props}
-            className="text-[#5865F2] font-semibold underline underline-offset-2"
-            target={props.href?.startsWith("http") ? "_blank" : undefined}
-            rel="noreferrer"
-          />
-        );
-      },
-      ul({ node, ...props }) {
-        return <ul className="list-disc pl-5 space-y-1" {...props} />;
-      },
-      ol({ node, ...props }) {
-        return <ol className="list-decimal pl-5 space-y-1" {...props} />;
-      },
-      p({ node, ...props }) {
-        return <p className="leading-relaxed text-slate-700" {...props} />;
-      },
-      strong({ node, ...props }) {
-        return <strong className="font-bold text-slate-800" {...props} />;
-      },
-    }),
-    [counts]
-  );
+  const renderers = {
+    h2({ children, ...props }) {
+      const title = children?.[0]?.toString?.() ?? "";
+      const base = slugify(title);
+      const current = counts.get(base) ?? 0;
+      const id = current === 0 ? base : `${base}-${current}`;
+      counts.set(base, current + 1);
+      return (
+        <h2
+          id={id}
+          {...props}
+          className="scroll-mt-24 text-2xl font-bold text-slate-800 mt-10 mb-3"
+        >
+          {children}
+        </h2>
+      );
+    },
+    h3({ children, ...props }) {
+      const title = children?.[0]?.toString?.() ?? "";
+      const base = slugify(title);
+      const current = counts.get(base) ?? 0;
+      const id = current === 0 ? base : `${base}-${current}`;
+      counts.set(base, current + 1);
+      return (
+        <h3 id={id} {...props} className="scroll-mt-24 text-xl font-bold text-slate-800 mt-6 mb-2">
+          {children}
+        </h3>
+      );
+    },
+    a({ ...props }) {
+      return (
+        <a
+          {...props}
+          className="token-text-cta font-bold underline underline-offset-2"
+          target={props.href?.startsWith("http") ? "_blank" : undefined}
+          rel="noreferrer"
+        />
+      );
+    },
+    ul({ ...props }) {
+      return <ul className="list-disc pl-5 space-y-1" {...props} />;
+    },
+    ol({ ...props }) {
+      return <ol className="list-decimal pl-5 space-y-1" {...props} />;
+    },
+    p({ ...props }) {
+      return <p className="leading-relaxed text-slate-700" {...props} />;
+    },
+    strong({ ...props }) {
+      return <strong className="font-bold text-slate-800" {...props} />;
+    },
+  };
 
   const scrollToTop = () =>
     window.scrollTo({
@@ -120,7 +110,7 @@ const LegalDocPage = ({ docKey }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f9ff] text-[#1e293b] font-sans">
+    <div className="min-h-screen token-bg-main token-text-primary font-sans">
       <Seo
         title={doc?.title || "お知らせ"}
         description={doc?.description || "現在はご案内を行っていません。"}
@@ -131,7 +121,7 @@ const LegalDocPage = ({ docKey }) => {
         <div className="flex items-center justify-start gap-3 mb-5">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-[#5fbb4e] no-print"
+            className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[var(--color-accent)] no-print"
           >
             <ArrowLeft size={18} />
             ホームへ戻る
@@ -162,12 +152,8 @@ const LegalDocPage = ({ docKey }) => {
               </div>
 
               <div className="mb-6">
-                <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
-                  {doc.title}
-                </h1>
-                <p className="text-sm md:text-base text-slate-600">
-                  {doc.description}
-                </p>
+                <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">{doc.title}</h1>
+                <p className="text-sm md:text-base text-slate-600">{doc.description}</p>
               </div>
 
               <article className="prose max-w-none prose-slate">
@@ -178,7 +164,7 @@ const LegalDocPage = ({ docKey }) => {
             </>
           ) : (
             <div className="py-16 text-center">
-              <p className="text-base md:text-lg font-semibold text-slate-600">
+              <p className="text-base md:text-lg font-bold text-slate-600">
                 現在はご案内を行っていません。
               </p>
             </div>

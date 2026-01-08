@@ -95,14 +95,9 @@ const applySeo = (options = {}) => {
   if (typeof document === "undefined") return;
 
   const defaults = getSiteDefaults();
-  const title = options.title || defaults.siteName;
-  const fullTitle = options.title
-    ? `${options.title} | ${defaults.siteName}`
-    : defaults.siteName;
+  const fullTitle = options.title ? `${options.title} | ${defaults.siteName}` : defaults.siteName;
   const description = options.description || defaults.description;
-  const path =
-    options.path ??
-    (typeof window !== "undefined" ? window.location.pathname : "");
+  const path = options.path ?? (typeof window !== "undefined" ? window.location.pathname : "");
   const canonical = normalizeUrl(defaults.baseUrl, path);
   const ogImage = options.image || defaults.ogImage;
   const locale = options.locale || defaults.locale;
@@ -139,19 +134,21 @@ const applySeo = (options = {}) => {
 };
 
 export const useSeo = (options = {}) => {
+  const { title, description, path, image, type, noIndex, locale, schemaId, schema } = options;
+
   useEffect(() => {
-    applySeo(options);
-  }, [
-    options.title,
-    options.description,
-    options.path,
-    options.image,
-    options.type,
-    options.noIndex,
-    options.locale,
-    options.schemaId,
-    JSON.stringify(options.schema ?? null),
-  ]);
+    applySeo({
+      title,
+      description,
+      path,
+      image,
+      type,
+      noIndex,
+      locale,
+      schemaId,
+      schema,
+    });
+  }, [title, description, path, image, type, noIndex, locale, schemaId, schema]);
 };
 
 export { getSiteDefaults, normalizeUrl };

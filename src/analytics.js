@@ -41,9 +41,11 @@ function ensureGtagLoaded() {
   gtagLoadPromise = new Promise((resolve) => {
     // Bootstrap dataLayer + gtag stub immediately so events can queue.
     window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function gtag() {
-      window.dataLayer.push(arguments);
-    };
+    window.gtag =
+      window.gtag ||
+      function gtag() {
+        window.dataLayer.push(arguments);
+      };
 
     // Load gtag.js only once.
     const existing = document.querySelector('script[data-gtag="true"]');
@@ -87,7 +89,6 @@ export function trackEvent(name, params = {}) {
   }
 
   if (import.meta.env.DEV) {
-    // eslint-disable-next-line no-console
     console.debug("[analytics:event]", name, params);
   }
 }
@@ -113,7 +114,6 @@ export function trackPageView(path) {
   }
 
   if (import.meta.env.DEV) {
-    // eslint-disable-next-line no-console
     console.debug("[analytics:page_view]", normalizedPath);
   }
 }
@@ -121,7 +121,6 @@ export function trackPageView(path) {
 export function captureError(error, context = {}) {
   if (!SENTRY_DSN) {
     if (import.meta.env.DEV) {
-      // eslint-disable-next-line no-console
       console.error("[error]", error, context);
     }
     return;
@@ -138,7 +137,6 @@ export function captureError(error, context = {}) {
   });
 
   if (import.meta.env.DEV) {
-    // eslint-disable-next-line no-console
     console.error("[sentry]", error, context);
   }
 }

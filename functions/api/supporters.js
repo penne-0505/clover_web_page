@@ -72,7 +72,8 @@ function getConfig(env) {
 
 async function fetchActiveSubscriptions(stripeConfig) {
   const stripe = new Stripe(stripeConfig.secretKey);
-  const query = "metadata['discord_user_id']:'*' AND (status:'active' OR status:'trialing' OR status:'past_due')";
+  const query =
+    "metadata['discord_user_id']:'*' AND (status:'active' OR status:'trialing' OR status:'past_due')";
 
   const subscriptions = [];
   let page;
@@ -191,11 +192,7 @@ function buildSupporterList(subscriptionMap, members) {
 
     return {
       id: userId,
-      name:
-        member?.nick ||
-        member?.user?.global_name ||
-        member?.user?.username ||
-        "Member",
+      name: member?.nick || member?.user?.global_name || member?.user?.username || "Member",
       avatar: sub?.avatarUrl || buildAvatarUrl(member?.user),
       plan,
       joinedAt: formatDate(sub?.startedAt || member?.joined_at),

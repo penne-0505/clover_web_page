@@ -34,7 +34,7 @@ export async function onRequest(context) {
   try {
     const body = await request.json();
     code = body.code;
-  } catch (_) {
+  } catch {
     return new Response("Invalid JSON", { status: 400 });
   }
 

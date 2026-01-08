@@ -8,10 +8,7 @@ import {
   HeartHandshake,
   HelpCircle,
   Users,
-  Settings,
   CreditCard,
-  User,
-  LogOut,
   Sparkles,
 } from "lucide-react";
 import { trackEvent, captureError } from "../analytics";
@@ -23,7 +20,11 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { homeHeroImages } from "../data/lpImages";
 import Seo from "../components/Seo";
-import { createDiscordOAuthState } from "../utils/discordAuth";
+import {
+  beginDiscordLogin,
+  exchangeDiscordCode,
+  extractDiscordOAuthParams,
+} from "../utils/discordAuth";
 
 const Membership = () => {
   const [user, setUser] = useState(() => {
@@ -59,71 +60,29 @@ const Membership = () => {
     setUser(null);
   };
 
-  const appBaseUrl =
-    import.meta.env.VITE_APP_BASE_URL || window.location.origin;
-  const redirectUriClient =
-    import.meta.env.VITE_DISCORD_REDIRECT_URI || `${appBaseUrl}/auth/callback`;
-
   // OAuth callback handling
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const code = url.searchParams.get("code");
+    const { code, cleanUrl } = extractDiscordOAuthParams(window.location.href, {
+      extraParams: ["checkout"],
+    });
     if (!code) return;
 
     // prevent duplicate calls
-    url.searchParams.delete("code");
-    url.searchParams.delete("state");
-    url.searchParams.delete("checkout"); // clear checkout banner after auth redirect
-    const cleanUrl = url.toString();
-    window.history.replaceState({}, "", cleanUrl);
+    if (cleanUrl) {
+      window.history.replaceState({}, "", cleanUrl);
+    }
 
     (async () => {
-      try {
-        const res = await fetch("/discord-oauth", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ code }),
-        });
-        if (!res.ok) {
-          const text = await res.text();
-          captureError(new Error("OAuth exchange failed"), { text });
-          return;
-        }
-        const data = await res.json();
-        if (data.user?.id) {
-          const discordUser = {
-            id: data.user.id,
-            name: data.user.username,
-            discriminator: data.user.discriminator,
-            avatar: data.user.avatar
-              ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
-              : null,
-          };
-          sessionStorage.setItem("discord_user", JSON.stringify(discordUser));
-          setUser(discordUser);
-          trackEvent("login_success", { provider: "discord" });
-        }
-      } catch (err) {
-        captureError(err, { stage: "oauth_callback" });
+      const result = await exchangeDiscordCode(code, {
+        errorStage: "oauth_callback",
+      });
+      if (!result.ok) return;
+      if (result.user) {
+        setUser(result.user);
+        trackEvent("login_success", { provider: "discord" });
       }
     })();
   }, []);
-
-  const beginDiscordLogin = () => {
-    trackEvent("login_start", { provider: "discord" });
-    const returnTo = `${window.location.pathname}${window.location.search}`;
-    const state = createDiscordOAuthState(returnTo || "/membership");
-    const params = new URLSearchParams({
-      client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
-      response_type: "code",
-      scope: "identify guilds.join",
-      redirect_uri: redirectUriClient,
-      prompt: "consent",
-      state,
-    });
-    window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
-  };
 
   const startCheckout = async (priceType) => {
     trackEvent("checkout_start_redirect", { priceType });
@@ -176,8 +135,7 @@ const Membership = () => {
     id: "guest",
     name: "Guest",
     discriminator: "0000",
-    avatar:
-      "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
+    avatar: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
   };
 
   const dismissCheckoutStatus = () => setCheckoutStatus(null);
@@ -190,11 +148,10 @@ const Membership = () => {
   };
 
   const membershipTitle = "メンバーシップ";
-  const membershipDescription =
-    "サポータープランの内容や参加手順、よくある質問をまとめています。";
+  const membershipDescription = "サポータープランの内容や参加手順、よくある質問をまとめています。";
 
   return (
-    <div className="min-h-screen bg-[#f0f9ff] text-[#1e293b] font-sans selection:bg-[#5fbb4e] selection:text-white overflow-x-hidden relative">
+    <div className="min-h-screen token-bg-main token-text-primary font-sans selection:bg-[var(--color-accent)] selection:text-white overflow-x-hidden relative">
       <Seo
         title={membershipTitle}
         description={membershipDescription}
@@ -202,10 +159,6 @@ const Membership = () => {
         type="website"
       />
       <style>{`
-        
-        body { font-family: 'M PLUS Rounded 1c', sans-serif; }
-        h1, h2, h3, .brand-font { font-family: 'Outfit', sans-serif; }
-        
         .soft-shadow {
           box-shadow: 
             0 4px 6px -1px rgba(0, 0, 0, 0.05),
@@ -238,7 +191,7 @@ const Membership = () => {
         }
 
         .text-glow {
-          text-shadow: 0 0 20px rgba(95, 187, 78, 0.5);
+          text-shadow: 0 0 20px rgba(var(--color-accent-rgb), 0.5);
         }
       `}</style>
 
@@ -283,7 +236,7 @@ const Membership = () => {
                 {checkoutStatus === "success" ? (
                   <a
                     href="https://discord.com/channels/@me"
-                    className="px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-semibold shadow-sm hover:bg-emerald-700 transition-colors"
+                    className="px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-bold shadow-sm hover:bg-emerald-700 transition-colors"
                   >
                     Discordを開く
                   </a>
@@ -293,14 +246,14 @@ const Membership = () => {
                       dismissCheckoutStatus();
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="px-3 py-2 rounded-lg bg-white border text-sm font-semibold hover:bg-slate-50 transition-colors"
+                    className="px-3 py-2 rounded-lg bg-white border text-sm font-bold hover:bg-slate-50 transition-colors"
                   >
                     プランを再選択
                   </button>
                 )}
                 <button
                   onClick={dismissCheckoutStatus}
-                  className="px-3 py-2 rounded-lg bg-transparent border border-slate-200 text-sm font-semibold hover:bg-slate-50 transition-colors"
+                  className="px-3 py-2 rounded-lg bg-transparent border border-slate-200 text-sm font-bold hover:bg-slate-50 transition-colors"
                 >
                   閉じる
                 </button>
@@ -365,11 +318,11 @@ const Membership = () => {
                       transition: { duration: 0.8, ease: "easeOut" },
                     },
                   }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-snug drop-shadow-2xl tracking-tight"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display text-white leading-snug drop-shadow-2xl tracking-tight"
                 >
-                  <span className="inline-block">いつもの場所を、</span>
+                  <span className="inline-block md:translate-x-[0.2em]">いつもの場所を、</span>
                   <br className="md:hidden" />
-                  <span className="text-[#5fbb4e] text-glow inline-block md:ml-4">
+                  <span className="token-text-accent text-glow inline-block md:ml-4 md:translate-x-[0.2em]">
                     特別なものに。
                   </span>
                 </motion.h1>
@@ -383,7 +336,7 @@ const Membership = () => {
                       transition: { duration: 0.8, ease: "easeOut" },
                     },
                   }}
-                  className="text-sm md:text-base text-slate-100 font-bold leading-relaxed max-w-lg mx-auto drop-shadow-md"
+                  className="text-sm md:text-base text-slate-100 font-body leading-relaxed max-w-lg mx-auto drop-shadow-md"
                 >
                   サーバーの維持と進化を、一緒に支えませんか。
                   <br className="hidden md:inline" />
@@ -405,7 +358,7 @@ const Membership = () => {
                     href="#pricing"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center gap-2 bg-[#5fbb4e] hover:bg-[#4ea540] text-white px-8 py-4 md:px-12 md:py-5 rounded-2xl font-bold text-lg md:text-xl btn-push shadow-[0_5px_0_#469e38] active:shadow-none active:translate-y-[5px] relative overflow-hidden group"
+                    className="inline-flex items-center gap-2 token-bg-accent hover:bg-[var(--color-action-hover)] text-white px-8 py-4 md:px-12 md:py-5 rounded-2xl font-bold text-lg md:text-xl btn-push shadow-[0_5px_0_var(--color-action-shadow)] active:shadow-none active:translate-y-[5px] relative overflow-hidden group"
                   >
                     <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-2xl pointer-events-none"></span>
                     <HeartHandshake className="w-6 h-6 md:w-7 md:h-7" />
@@ -428,29 +381,29 @@ const Membership = () => {
         </section>
 
         <section className="w-full relative z-20 mb-20 overflow-hidden group">
-          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-[#f0f9ff] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-[#f0f9ff] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-[var(--color-bg-main)] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-[var(--color-bg-main)] to-transparent z-10 pointer-events-none" />
           <SupporterTicker />
         </section>
 
         <section className="container mx-auto px-4 py-12 flex flex-col md:flex-row items-center gap-12 max-w-5xl mb-24">
           <div className="flex-1 space-y-6 text-center md:text-left">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-800 tracking-tight -translate-x-[0.1em]">
+            <h2 className="text-4xl md:text-5xl font-black token-text-display tracking-tight -translate-x-[0.1em]">
               サポーターの証が、
               <br />
-              <span className="text-[#5865F2]">あなたを示す。</span>
+              <span className="token-text-cta">あなたを示す。</span>
             </h2>
-            <p className="text-slate-600 font-medium leading-relaxed text-sm">
+            <p className="text-slate-600 font-body leading-relaxed text-sm">
               専用のカラーとロールで、コミュニティ内での存在感が変わります。
               <br />
               <br />
               限定チャンネルでは、アップデート情報をいち早くキャッチしたり、チームへ直接フィードバックを送ることができます。
             </p>
             <div className="flex gap-2 justify-center md:justify-start">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#5fbb4e]/10 text-[#5fbb4e] text-xs font-bold cursor-default">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[rgb(var(--color-accent-rgb)/0.1)] token-text-accent text-xs font-bold cursor-default">
                 <Crown size={14} className="mr-1" /> 専用ロール
               </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#5865F2]/10 text-[#5865F2] text-xs font-bold cursor-default">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-[rgb(var(--color-cta-rgb)/0.1)] token-text-cta text-xs font-bold cursor-default">
                 <Users size={14} className="mr-1" /> 限定チャンネル
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#FFC107]/10 text-[#B28704] text-xs font-bold cursor-default">
@@ -460,33 +413,32 @@ const Membership = () => {
           </div>
 
           <div className="flex-1 w-full flex justify-center md:justify-end md:pr-16">
-                <DiscordMemberListMock user={displayUser} />
+            <DiscordMemberListMock user={displayUser} />
           </div>
         </section>
 
         <section id="pricing" className="py-20 relative">
           <div className="container mx-auto px-4">
             <div className="flex flex-col items-center mb-12">
-              <span className="text-[#5fbb4e] font-black tracking-widest uppercase text-sm mb-3 block">
+              <span className="token-text-accent font-bold tracking-widest uppercase text-sm mb-3 block">
                 Supporter Plans
               </span>
 
               <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-4 text-center">
                 支援の方法を選ぶ
               </h2>
-              <p className="text-slate-500 font-bold text-sm max-w-lg text-center leading-relaxed">
-                ライフスタイルに合わせて、3つのプランからお選びいただけます。<br/>
+              <p className="text-slate-500 font-body text-sm max-w-lg text-center leading-relaxed">
+                ライフスタイルに合わせて、3つのプランからお選びいただけます。
+                <br />
                 まずは1ヶ月プランで試してみませんか？
               </p>
             </div>
 
             <div className="max-w-5xl mx-auto">
-              <PricingComponent
-                onStartCheckout={(priceType) => startCheckout(priceType)}
-              />
+              <PricingComponent onStartCheckout={(priceType) => startCheckout(priceType)} />
             </div>
 
-            <div className="text-center mt-12 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
+            <div className="text-center mt-12 text-xs text-slate-400 font-semibold max-w-lg mx-auto leading-relaxed">
               すべてのプランで同じ特典を提供します。適用期間及び更新方法が異なります。
               <br />
             </div>
@@ -502,21 +454,11 @@ const Membership = () => {
           >
             {/* Background Accent - Soft & Minimal */}
             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-slate-100 to-slate-50 rounded-bl-full -mr-12 -mt-12 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#5fbb4e]/5 rounded-tr-full -ml-10 -mb-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-[rgb(var(--color-accent-rgb)/0.05)] rounded-tr-full -ml-10 -mb-10 pointer-events-none" />
 
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
-                  <div className="p-2 bg-slate-100 rounded-xl text-slate-600 shadow-sm border border-slate-200/50">
-                    <Settings size={20} />
-                  </div>
-                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
-                    Subscription
-                  </span>
-                </div>
-                <h3 className="text-2xl font-black text-slate-800 mb-3">
-                  契約内容の確認・変更
-                </h3>
+                <h3 className="text-2xl font-black text-slate-800 mb-3">契約内容の確認・変更</h3>
                 <p className="text-sm font-bold text-slate-500 leading-relaxed max-w-md mx-auto md:mx-0">
                   支払い履歴の確認、カード情報の変更、プランの解約はこちら。
                 </p>
@@ -547,33 +489,22 @@ const Membership = () => {
                     </>
                   )}
                 </button>
-                
+
                 {/* Status & Sub-actions */}
                 <div className="flex flex-col items-center md:items-end gap-1">
                   <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
-                    <div className={`w-2 h-2 rounded-full ${user ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" : "bg-slate-300"}`} />
+                    <div
+                      className={`w-2 h-2 rounded-full ${user ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" : "bg-slate-300"}`}
+                    />
                     {user ? (
                       <span className="flex items-center gap-1">
-                        ログイン中: <span className="text-slate-600 font-mono">#{user.discriminator}</span>
+                        ログイン中:{" "}
+                        <span className="text-slate-600 font-mono">#{user.discriminator}</span>
                       </span>
-                    ) : "ログインが必要です"}
+                    ) : (
+                      "ログインが必要です"
+                    )}
                   </div>
-                  
-                  {user ? (
-                    <button 
-                      onClick={handleLogout}
-                      className="text-[10px] font-bold text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1 px-1"
-                    >
-                      <LogOut size={10} /> ログアウト
-                    </button>
-                  ) : (
-                    <button 
-                      onClick={beginDiscordLogin}
-                      className="text-[10px] font-bold text-[#5865F2] hover:text-[#4752C4] transition-colors flex items-center gap-1 px-1"
-                    >
-                      <Users size={10} /> ログインする
-                    </button>
-                  )}
                 </div>
               </div>
             </div>
@@ -595,7 +526,7 @@ const Membership = () => {
 
         <section className="container mx-auto px-4 py-16 max-w-3xl">
           <h2 className="text-2xl font-black text-slate-800 mb-8 text-center flex items-center justify-center gap-2">
-            <HelpCircle className="text-[#5fbb4e]" /> よくある質問
+            <HelpCircle className="token-text-accent" /> よくある質問
           </h2>
           <div className="space-y-4">
             <FAQItem

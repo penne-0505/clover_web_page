@@ -73,11 +73,7 @@ export async function onRequest(context) {
       return new Response("Forbidden", { status: 403 });
     }
 
-    trackEvent(
-      "checkout_session_fetch_success",
-      { mode, status, paymentStatus, priceType },
-      env
-    );
+    trackEvent("checkout_session_fetch_success", { mode, status, paymentStatus, priceType }, env);
 
     return new Response(
       JSON.stringify({
@@ -89,15 +85,11 @@ export async function onRequest(context) {
           mode,
           amount_total: session.amount_total ?? null,
           currency: session.currency ?? null,
-          created: session.created
-            ? new Date(session.created * 1000).toISOString()
-            : null,
+          created: session.created ? new Date(session.created * 1000).toISOString() : null,
           price_type: priceType,
           payment_method_types: session.payment_method_types ?? [],
-          transaction_id:
-            session.payment_intent?.id || session.payment_intent || session.id,
-          line_item_name:
-            lineItem?.description || lineItem?.price?.nickname || null,
+          transaction_id: session.payment_intent?.id || session.payment_intent || session.id,
+          line_item_name: lineItem?.description || lineItem?.price?.nickname || null,
           subscription_status: subscriptionStatus,
         },
       }),

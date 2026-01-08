@@ -70,16 +70,19 @@ Secrets はリポジトリにコミットせず、Cloudflare の環境変数で�
 npm run dev      # 開発サーバー起動（デフォルト: http://localhost:5173）
 npm run build    # 本番ビルド出力（dist/）
 npm run preview  # 本番ビルドのローカルプレビュー
+npm run lint     # ESLint / Prettier チェック
+npm run format   # Prettier による自動整形
 ```
-- Tailwind CSS は CDN ロードのため追加設定不要です。
-- 現時点で Linter は未設定です（`npm run lint` はダミー）。既存コードスタイルに合わせてください。
+- Tailwind CSS は PostCSS 経由でビルドに組み込まれています。
+- ESLint / Prettier が設定済みです。PR提出前に `npm run lint` を実行してください。
+- Git の pre-commit で `lint-staged` が走り、JS/JSX/CSS に対して lint/format が適用されます。
 
 ## 3. コーディングガイドライン
 
 ### コードスタイル
 
-  - リポジトリに設定された Linter / Formatter に従ってください。
-  - PR提出前に `flutter analyze` がパスすることを確認してください。
+  - リポジトリに設定された ESLint / Prettier のルールに従ってください。
+  - PR提出前に `npm run lint` がパスすることを確認してください。
 
 ### AI生成コードの利用ポリシー (責任の所在)
 

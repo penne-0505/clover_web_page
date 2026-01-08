@@ -25,15 +25,12 @@ const Header = ({
   const loginIconSrc = isMembershipPage
     ? discordIcon
     : "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f4ac.svg";
-  const loginIconClassName = `w-5 h-5 shrink-0 ${
-    isMembershipPage ? "" : "invert brightness-0"
-  }`;
+  const loginIconClassName = `w-5 h-5 shrink-0 ${isMembershipPage ? "" : "invert brightness-0"}`;
 
   const displayUser = user ?? {
     name: "Guest",
     discriminator: "0000",
-    avatar:
-      "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
+    avatar: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
   };
 
   const handleLogin = () => {
@@ -64,23 +61,23 @@ const Header = ({
           className="flex items-baseline gap-2 group cursor-pointer text-left focus:outline-none"
           whileTap={{ scale: 0.98 }}
         >
-          <span className="text-lg md:text-xl font-extrabold tracking-tight brand-font text-slate-700 transition-colors duration-300 group-hover:text-[#5fbb4e]">
+          <span className="text-lg md:text-xl font-bold tracking-tight font-outfit text-slate-700 transition-colors duration-300 group-hover:text-[var(--color-accent)]">
             Minecraft Community <InteractiveSprout />
           </span>
           {isMembershipPage && (
-            <span className="text-[#5fbb4e] font-black text-xs uppercase tracking-wide hidden sm:inline-block bg-[#5fbb4e]/10 px-2 py-0.5 rounded-full border border-[#5fbb4e]/20 group-hover:bg-[#5fbb4e]/20 transition-colors">
+            <span className="token-text-accent font-semibold text-xs uppercase tracking-wide hidden sm:inline-block bg-[rgb(var(--color-accent-rgb)/0.1)] px-2 py-0.5 rounded-full border border-[rgb(var(--color-accent-rgb)/0.2)] group-hover:bg-[rgb(var(--color-accent-rgb)/0.2)] transition-colors">
               Supporters
             </span>
           )}
         </motion.button>
 
         {hasNav && navPosition === "center" && (
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="hover:text-[#5fbb4e] transition-colors whitespace-nowrap"
+                className="hover:text-[var(--color-accent)] transition-colors whitespace-nowrap"
               >
                 {item.label}
               </a>
@@ -90,12 +87,12 @@ const Header = ({
 
         <div className="flex items-center gap-5">
           {hasNav && navPosition === "right" && (
-            <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500">
+            <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="hover:text-[#5fbb4e] transition-colors whitespace-nowrap"
+                  className="hover:text-[var(--color-accent)] transition-colors whitespace-nowrap"
                 >
                   {item.label}
                 </a>
@@ -117,15 +114,11 @@ const Header = ({
             <div className="flex flex-col items-end">
               <motion.button
                 onClick={handleLogin}
-                whileHover={{ scale: 1.05, backgroundColor: "#4752C4" }}
+                whileHover={{ scale: 1.05, backgroundColor: "var(--color-cta-shadow)" }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-[#5865F2] text-white font-bold text-sm btn-push flex items-center justify-center gap-2 shadow-[0_4px_0_#4752C4] transition-all duration-300 px-5 py-2.5 rounded-xl"
+                className="token-bg-cta text-white font-bold text-sm btn-push flex items-center justify-center gap-2 shadow-[0_4px_0_var(--color-cta-shadow)] hover:bg-[var(--color-cta-shadow)] transition-all duration-300 px-5 py-2.5 rounded-xl"
               >
-                <img
-                  src={loginIconSrc}
-                  className={loginIconClassName}
-                  alt=""
-                />
+                <img src={loginIconSrc} className={loginIconClassName} alt="" />
                 <span className="whitespace-nowrap">Discordでログイン</span>
               </motion.button>
             </div>
@@ -144,7 +137,7 @@ const Header = ({
                 className="w-8 h-8 rounded-full bg-white shadow-sm"
               />
               <div className="flex flex-col items-center text-center leading-none">
-                <span className="text-xs font-bold text-slate-700">
+                <span className="text-xs font-semibold text-slate-700">
                   {displayUser.name ?? "Unknown"}
                 </span>
               </div>
@@ -175,7 +168,7 @@ const Header = ({
                   <a
                     key={item.href}
                     href={item.href}
-                    className="text-slate-600 font-bold hover:text-[#5fbb4e] transition-colors w-full text-center"
+                    className="text-slate-600 font-semibold hover:text-[var(--color-accent)] transition-colors w-full text-center"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}
